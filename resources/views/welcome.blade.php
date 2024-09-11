@@ -11,7 +11,7 @@
             <div class="col-md-5 wrap col-sm-12 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
               <h1 class="mb-4 mt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Trade CFDs Without Paying Swap Fees</h1>
               <p class="mb-4 mb-md-5 sub-p" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Trade swap-free on the most popular currency pairs, metals and index CFDs!*</p>
-              <p><a href="#" class="btn btn-primary p-3 px-xl-5 py-xl-3">Get started</a></p>
+              <p><a href="{{url('login')}}" class="btn btn-primary p-3 px-xl-5 py-xl-3">Get started</a></p>
             </div>
             <div class="col-md-7 ftco-animate">
             	<img src="{{asset('images/dashboard_full_1.png')}}" class="img-fluid" alt="">
@@ -87,7 +87,7 @@
             </div>
             <div class="row justify-content-center mb-5">
             <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-                <a href="#" class="btn btn-primary p-3 px-xl-5 py-xl-3">Sign Up For Free</a>
+                <a href="{{url('register')}}" class="btn btn-primary p-3 px-xl-5 py-xl-3">Sign Up For Free</a>
             </div>
             </div>
     	</div>
@@ -115,7 +115,7 @@
         </div>
         <div class="row justify-content-center mb-5">
         <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-            <a href="#" class="btn btn-primary p-3 px-xl-5 py-xl-3">Start Trading</a>
+            <a href="{{url('login')}}" class="btn btn-primary p-3 px-xl-5 py-xl-3">Start Trading</a>
         </div>
         </div>
       </div>
@@ -136,7 +136,7 @@
                     <li><span style="color: green;">&#10003;</span> 500+ CFDs on currencies, energies, metals, indices, stocks & ETFs</li>
                 </ul>
 
-                <a href="#" class="btn btn-primary p-3 px-xl-5 py-xl-3">TRY FREE ON DEMO</a>
+                <a href="{{url('login')}}" class="btn btn-primary p-3 px-xl-5 py-xl-3">TRY FREE ON DEMO</a>
             </div>
     </section>
 
