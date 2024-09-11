@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('f_name');
             $table->string('m_name');
             $table->string('l_name');
+            $table->string('country_code');
+            $table->string('phone');
+            $table->string('nationality');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
