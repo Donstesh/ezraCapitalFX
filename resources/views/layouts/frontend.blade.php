@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,,500,600,700" rel="stylesheet">
 
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="icon" type="image/png" href="{{asset('/images/favicon.png')}}">
     <link rel="stylesheet" href="css/animate.css">
 
     <link rel="stylesheet" href="css/owl.carousel.min.css">
@@ -71,10 +72,10 @@
         <div class="ftco-footer-widget mb-4">
           <h2 class="ftco-heading-2">Resources</h2>
           <ul class="list-unstyled">
-            <li><a href="#" class="py-2 d-block">About Us</a></li>
-            <li><a href="#" class="py-2 d-block">Cookie Policy</a></li>
-            <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
-            <li><a href="#" class="py-2 d-block">Risk Disclosure</a></li>
+            <li><a href="{{url('about-us')}}" class="py-2 d-block">About Us</a></li>
+            <li><a href="{{url('cookie-policy')}}" class="py-2 d-block">Cookie Policy</a></li>
+            <li><a href="{{url('privacy-policy')}}" class="py-2 d-block">Privacy Policy</a></li>
+            <li><a href="{{url('risk-disclosure')}}" class="py-2 d-block">Risk Disclosure</a></li>
           </ul>
         </div>
       </div>
