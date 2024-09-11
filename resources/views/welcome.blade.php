@@ -88,38 +88,6 @@
       </div>
     </section>
 
-    <section class="ftco-domain">
-    	<div class="container">
-    		<div class="row d-flex">
-    			<div class="col-lg-5 heading-white mb-4 mb-sm-4 mb-lg-0 ftco-animate">
-    				<h2>Search You Domain Name</h2>
-    				<p>A small river named Duden flows by their place</p>
-    			</div>
-    			<div class="col-lg-7 ftco-wrap ftco-animate">
-    				<form action="#" class="domain-form d-flex">
-              <div class="form-group domain-name">
-                <input type="text" class="form-control name px-4" placeholder="Enter your domain name...">
-              </div>
-              <div class="form-group domain-select d-flex">
-	              <div class="select-wrap">
-                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                  <select name="" id="" class="form-control">
-                  	<option value="">.com</option>
-                    <option value="">.net</option>
-                    <option value="">.biz</option>
-                    <option value="">.co</option>
-                    <option value="">.me</option>
-                  </select>
-                </div>
-                <input type="submit" class="search-domain btn btn-primary text-center" value="Search">
-	            </div>
-            </form>
-            <p class="domain-price mt-2"><span><small>.com</small> $9.75</span> <span><small>.net</small> $9.50</span> <span><small>.biz</small> $8.95</span> <span><small>.co</small> $7.80</span><span><small>.me</small> $7.95</span></p>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-
     <section class="ftco-section services-section bg-light">
       <div class="container">
       	<div class="row justify-content-center mb-5 pb-3">
