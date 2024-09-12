@@ -10,7 +10,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="images/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -50,7 +50,7 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><h6>{{ Auth::user()->f_name }} {{ Auth::user()->l_name }}</h6></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -117,7 +117,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="{{url('home')}}">
           <i class="bi bi-grid"></i>
           <span>Home</span>
         </a>
@@ -128,14 +128,14 @@
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="{{url('plans')}}">
           <i class="bi bi-tag"></i>
           <span>Plans</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
+        <a class="nav-link collapsed" href="{{url('deposit')}}">
           <i class="bi bi-cash-coin"></i>
           <span>Deposit</span>
         </a>
@@ -152,6 +152,13 @@
         <a class="nav-link collapsed" href="pages-register.html">
           <i class="bi bi-wallet"></i>
           <span>Withdrwals</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('copy-trading')}}">
+          <i class="bi bi-people"></i>
+          <span>Copy Trading</span>
         </a>
       </li><!-- End Register Page Nav -->
 
@@ -180,10 +187,6 @@
 
   </aside><!-- End Sidebar-->
             @yield('content')
-           <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-
-  </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
