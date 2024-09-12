@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendOtpMail;
+use App\Mail\WelcomeEmail;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -63,6 +64,9 @@ class HomeController extends Controller
             // Mark OTP as verified
             $user->otp_verified = true;
             $user->save();
+
+            // Send welcome email
+            Mail::to($user->email)->send(new WelcomeEmail($user));
 
             return redirect()->route('home')->with('success', 'OTP verified successfully.');
         }
