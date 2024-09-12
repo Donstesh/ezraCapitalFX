@@ -53,19 +53,25 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
-        {
-            if (auth()->user()->type == 'admin') {
+        if (auth()->attempt(['email' => $input['email'], 'password' => $input['password']])) {
+            $user = auth()->user();
+
+            // Redirect to OTP verification page for managers if OTP is not verified
+            if ($user->type == 'user' && !$user->otp_verified) {
+                return redirect()->route('otp.verify');
+            }
+
+            // Redirect based on user type
+            if ($user->type == 'admin') {
                 return redirect()->route('admin.home');
-            }else if (auth()->user()->type == 'manager') {
+            } else if ($user->type == 'manager') {
                 return redirect()->route('manager.home');
-            }else{
+            } else {
                 return redirect()->route('home');
             }
-        }else{
+        } else {
             return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
+                ->with('error', 'Email-Address And Password Are Wrong.');
         }
-
     }
 }
