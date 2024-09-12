@@ -48,6 +48,7 @@ class RegisterController extends Controller
             'city' => $data['city'],
             'phone' => $data['phone'],
             'email' => $data['email'],
+            'type' => 0,
             'otp' => $otp, // Save the OTP in the database
             'password' => Hash::make($data['password']),
         ]);
