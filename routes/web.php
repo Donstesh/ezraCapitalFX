@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\OtpVerificationController;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,18 @@ Auth::routes();
 Route::get('/otp-verify', [HomeController::class, 'showOtpForm'])->name('otp.verify');
 Route::post('/otp-verify', [HomeController::class, 'verifyOtp'])->name('otp.verify.submit');
 Route::post('/request-otp', [HomeController::class, 'requestOtp'])->name('request.otp');
+
+Route::get('/test-email', function () {
+    try {
+        Mail::raw('This is a test email', function ($message) {
+            $message->to('donstesh@gmail.com')
+                    ->subject('Test Email');
+        });
+        return 'Email sent successfully!';
+    } catch (Exception $e) {
+        return 'Failed to send email: ' . $e->getMessage();
+    }
+});
 
 /*------------------------------------------
 --------------------------------------------
