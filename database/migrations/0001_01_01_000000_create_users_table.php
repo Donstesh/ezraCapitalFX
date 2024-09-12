@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('currency')->nullable();
             $table->string('phone');
             $table->string('email')->unique();
+            $table->string('otp')->nullable();
+            $table->boolean('otp_verified')->default(false);
+            $table->timestamp('otp_sent_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('type');
