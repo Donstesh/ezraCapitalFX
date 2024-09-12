@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Auth\OtpVerificationController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
@@ -47,6 +47,14 @@ All Normal Users Routes List
 Route::middleware(['auth', 'user-access:user'])->group(function () {
 
     Route::get('/manager/home', [HomeController::class, 'managerHome'])->name('manager.home');
+
+    Route::get('/deposit', [WalletController::class, 'index'])->name('deposit');
+    Route::post('/wallet/update', [WalletController::class, 'updateWalletAddress'])->name('wallet.update');
+    Route::get('/addresses', [WalletController::class, 'walletAddress'])->name('addresses');
+    Route::post('/deposit', [WalletController::class, 'depositRequest'])->name('deposit.request');
+
+    Route::get('/plans', [HomeController::class, 'plansList'])->name('deposit.plans');
+    Route::get('/copy-trading', [HomeController::class, 'copyTrading'])->name('copy-trading');
 });
 
 /*------------------------------------------
