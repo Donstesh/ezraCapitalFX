@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Str;
 
 class CreateUsersSeeder extends Seeder
 {
@@ -39,15 +40,22 @@ class CreateUsersSeeder extends Seeder
                'password'=> bcrypt('123456'),
             ],
             [
-               'f_name'=>'Nomarl User',
-               'm_name'=>'Middle Name',
-               'l_name'=>'User',
-               'country'=>'Kenya',
-               'city'=>'NBO',
-               'phone'=>'712345678',
-               'email'=>'user@ezra.com',
-               'type'=>0,
-               'password'=> bcrypt('123456'),
+               'f_name' => 'Normal User',
+            'm_name' => 'Middle Name',
+            'l_name' => 'User',
+            'country' => 'Kenya',
+            'city' => 'NBO',
+            'phone' => '712345678',
+            'email' => 'user@ezra.com',
+            'otp' => mt_rand(100000, 999999),
+            'otp_verified' => false,
+            'otp_sent_at' => now(),
+            'email_verified_at' => now(),
+            'password' => bcrypt('123456'),
+            'type' => 0,
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
             ],
         ];
 
