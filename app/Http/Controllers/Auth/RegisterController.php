@@ -7,45 +7,20 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendOtpMail; // Import the SendOtpMail Mailable
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -59,23 +34,27 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
     protected function create(array $data)
     {
-        return User::create([
+        // Step 1: Generate a 6-digit OTP
+        $otp = mt_rand(100000, 999999);
+
+        // Step 2: Create the user in the database and store the OTP
+        $user = User::create([
             'f_name' => $data['f_name'],
-            'm_name' => $data['m_name'],
+            'm_name' => $data['m_name'] ?? null,  // Optional middle name
             'l_name' => $data['l_name'],
             'country' => $data['country'],
             'city' => $data['city'],
             'phone' => $data['phone'],
             'email' => $data['email'],
+            'otp' => $otp, // Save the OTP in the database
             'password' => Hash::make($data['password']),
         ]);
+
+        // Step 3: Send the OTP to the user's email
+        Mail::to($user->email)->send(new SendOtpMail($otp));
+
+        return $user;
     }
 }
