@@ -31,6 +31,24 @@ class HomeController extends Controller
     {
         return view('user.home');
     }
+        /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function plansList(): View
+    {
+        return view('plans');
+    }
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function copyTrading(): View
+    {
+        return view('copy-trading');
+    }
     /**
      * Show the OTP verification form.
      */
