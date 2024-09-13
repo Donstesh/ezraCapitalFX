@@ -38,7 +38,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="images/logo.png" alt="">
-        <span class="d-none d-lg-block">Ez Capital FX Live</span>
+        <span class="d-none d-lg-block">Ezra Capital FX Live</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -49,7 +49,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img src="assets/img/user.png" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2"><h6>{{ Auth::user()->f_name }} {{ Auth::user()->l_name }}</h6></span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -142,14 +142,14 @@
       </li><!-- End F.A.Q Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
+        <a class="nav-link collapsed" href="{{url('my-account')}}">
           <i class="bi bi-person"></i>
           <span>My Account</span>
         </a>
       </li><!-- End Contact Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
+        <a class="nav-link collapsed" href="{{url('withdrawal')}}">
           <i class="bi bi-wallet"></i>
           <span>Withdrwals</span>
         </a>
@@ -163,14 +163,14 @@
       </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
+        <a class="nav-link collapsed" href="{{url('mining')}}">
           <i class="bi bi-minecart-loaded"></i>
           <span>Mining</span>
         </a>
       </li><!-- End Login Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
+        <a class="nav-link collapsed" href="{{url('trading-room')}}">
           <i class="bi bi-graph-up-arrow"></i>
           <span>Trading</span>
         </a>
