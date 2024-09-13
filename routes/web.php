@@ -53,8 +53,14 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/addresses', [WalletController::class, 'walletAddress'])->name('addresses');
     Route::post('/deposit', [WalletController::class, 'depositRequest'])->name('deposit.request');
 
-    Route::get('/plans', [HomeController::class, 'plansList'])->name('deposit.plans');
+    Route::get('/plans', [HomeController::class, 'plansList'])->name('plans');
     Route::get('/copy-trading', [HomeController::class, 'copyTrading'])->name('copy-trading');
+    Route::get('/trading-room', [HomeController::class, 'tradingRoom'])->name('trading-room');
+    Route::get('/open-trade', [HomeController::class, 'openTrades'])->name('open-trade');
+    Route::get('/close-trade', [HomeController::class, 'closedTrades'])->name('close-trade');
+    Route::get('/mining', [HomeController::class, 'miningHome'])->name('mining');
+    Route::get('/mining-plans', [HomeController::class, 'miningPlans'])->name('mining-plans');
+    Route::get('/withdrawal', [HomeController::class, 'withdrawalRequest'])->name('withdrawal');
 });
 
 /*------------------------------------------
