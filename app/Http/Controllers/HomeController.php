@@ -31,7 +31,7 @@ class HomeController extends Controller
     {
         return view('user.home');
     }
-        /**
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
@@ -48,6 +48,35 @@ class HomeController extends Controller
     public function copyTrading(): View
     {
         return view('copy-trading');
+    }
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function tradingRoom(): View
+    {
+        return view('trading-room');
+    }
+    public function openTrades(): View
+    {
+        return view('open-trade');
+    }
+    public function closedTrades(): View
+    {
+        return view('close-trade');
+    }
+    public function miningHome(): View
+    {
+        return view('mining');
+    }
+    public function miningPlans(): View
+    {
+        return view('mining-plans');
+    }
+    public function withdrawalRequest(): View
+    {
+        return view('withdrawal');
     }
     /**
      * Show the OTP verification form.
