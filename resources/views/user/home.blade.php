@@ -163,20 +163,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($user_trades_open as $trade)
                                         <tr>
-                                            <td>USDEUR</td>
-                                            <td>$2150</td>
-                                            <td>$87.90</td>
-                                            <td>2024/29/09</td>
-                                            <td>open</td>
+                                            <td>{{ $trade->symbol }}</td>
+                                            <td>${{ $trade->amount }}</td>
+                                            <td>${{ $trade->profit }}</td>
+                                            <td>{{ $trade->date }}</td>
+                                            <td>{{ $trade->trade_status }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>XAUUSD</td>
-                                            <td>$200</td>
-                                            <td>$96.99</td>
-                                            <td>2024/29/09</td>
-                                            <td>open</td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -194,20 +189,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($user_trades_closed as $trade)
                                         <tr>
-                                            <td>USDBTC</td>
-                                            <td>$200</td>
-                                            <td>$46.90</td>
-                                            <td>2024/29/09</td>
-                                            <td>closed</td>
+                                            <td>{{ $trade->symbol }}</td>
+                                            <td>${{ $trade->amount }}</td>
+                                            <td>${{ $trade->profit }}</td>
+                                            <td>{{ $trade->date }}</td>
+                                            <td>{{ $trade->trade_status }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>USDBTC</td>
-                                            <td>$200</td>
-                                            <td>$46.90</td>
-                                            <td>2024/29/09</td>
-                                            <td>closed</td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

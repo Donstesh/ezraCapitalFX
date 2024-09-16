@@ -10,6 +10,7 @@ use App\Mail\SendOtpMail;
 use App\Mail\WelcomeEmail;
 use App\Models\KycVerify;
 use App\Models\Deposit;
+use App\Models\Trade;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -38,9 +39,14 @@ class HomeController extends Controller
 
         $status = $kyc ? $kyc->status : 'pending';
 
+        $user_trades_open = Trade::where('user_id', $user->id)->where('trade_status', 'open')->get();
+        $user_trades_closed = Trade::where('user_id', $user->id)->where('trade_status', 'closed')->get();
+
         return view('user.home', [
             'status' => $status,
-            'user_balance' => $user_balance
+            'user_balance' => $user_balance,
+            'user_trades_open' => $user_trades_open,
+            'user_trades_closed' => $user_trades_closed,
         ]);
     }
 
