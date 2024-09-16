@@ -1,5 +1,5 @@
-@extends('layouts.user')
-  
+@extends('layouts.userdash')
+
 @section('content')
 <main id="main" class="main">
 
