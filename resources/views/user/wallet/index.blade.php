@@ -105,41 +105,25 @@
                         </th>
                         <td class="fw-bold text-large">{{$btc}}</td>
                         <td class="text-large">11.31</td>
-                        <td class="text-large">
-                            <a href=""><i class="bi bi-send me-4"></i></a>
-                            <a href=""><i class="bi bi-box-arrow-in-down me-4"></i></a>
-                            <a href=""><i class="bi bi-arrow-repeat me-4"></i></a>
-                        </td>
+
                       </tr>
                       <tr>
                         <th scope="row"><img src="assets/img/ethereum.svg" alt="" height="30px"> ETH</th>
                         <td class="fw-bold text-large">{{$eth}}</td>
                         <td class="text-large"> 0</td>
-                        <td class="text-large">
-                            <a href=""><i class="bi bi-send me-4"></i></a>
-                            <a href=""><i class="bi bi-box-arrow-in-down me-4"></i></a>
-                            <a href=""><i class="bi bi-arrow-repeat me-4"></i></a>
-                        </td>
+
                       </tr>
                       <tr>
                         <th scope="row"><img src="assets/img/tether.svg" alt="" height="30px"> USDT</th>
                         <td class="fw-bold text-large">{{$usdt}}</td>
                         <td class="text-large">0</td>
-                        <td class="text-large">
-                            <a href=""><i class="bi bi-send me-4"></i></a>
-                            <a href=""><i class="bi bi-box-arrow-in-down me-4"></i></a>
-                            <a href=""><i class="bi bi-arrow-repeat me-4"></i></a>
-                        </td>
+
                       </tr>
                       <tr>
                         <th scope="row"><img src="assets/img/usd-coin.svg" alt="" height="30px"> USDC</th>
                         <td class="fw-bold text-large">{{$usdc}}</td>
                         <td class="text-large">0</td>
-                        <td class="text-large">
-                            <a href=""><i class="bi bi-send me-4"></i></a>
-                            <a href=""><i class="bi bi-box-arrow-in-down me-4"></i></a>
-                            <a href=""><i class="bi bi-arrow-repeat me-4"></i></a>
-                        </td>
+
                       </tr>
                     </tbody>
                   </table>
