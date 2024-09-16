@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\KycVerifyController;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
@@ -61,6 +62,11 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/mining', [HomeController::class, 'miningHome'])->name('mining');
     Route::get('/mining-plans', [HomeController::class, 'miningPlans'])->name('mining-plans');
     Route::get('/withdrawal', [HomeController::class, 'withdrawalRequest'])->name('withdrawal');
+    Route::get('/my-account', [HomeController::class, 'userAccount'])->name('my-account');
+    Route::get('/kyc', [KycVerifyController::class, 'index'])->name('kyc');
+    Route::post('/kyc', [KycVerifyController::class, 'personaDetails'])->name('kyc.store');
+    Route::post('/selfie', [KycVerifyController::class, 'selfie'])->name('kyc.selfie');
+    Route::post('/proof-of-residence', [KycVerifyController::class, 'proofOfResidence'])->name('kyc.proof-of-residence');
 });
 
 /*------------------------------------------
