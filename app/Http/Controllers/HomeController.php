@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendOtpMail;
 use App\Mail\WelcomeEmail;
+use App\Models\KycVerify;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -29,7 +30,12 @@ class HomeController extends Controller
      */
     public function index(): View
     {
-        return view('user.home');
+        $user = Auth::user();
+
+        $kyc = KycVerify::where('user_id', $user->id)->first();
+
+        $status = $kyc ? $kyc->status : 'pending';
+        return view('user.home', ['status' => $status]);
     }
     /**
      * Show the application dashboard.
