@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="icon" type="image/png" href="{{asset('/images/favicon.png')}}">
     <link rel="stylesheet" href="css/animate.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
