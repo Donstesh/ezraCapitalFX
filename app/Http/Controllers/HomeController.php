@@ -78,6 +78,10 @@ class HomeController extends Controller
     {
         return view('withdrawal');
     }
+    public function userAccount(): View
+    {
+        return view('user.profile.index');
+    }
     /**
      * Show the OTP verification form.
      */
