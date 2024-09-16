@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendOtpMail;
 use App\Mail\WelcomeEmail;
 use App\Models\KycVerify;
+use App\Models\Deposit;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -33,10 +34,16 @@ class HomeController extends Controller
         $user = Auth::user();
 
         $kyc = KycVerify::where('user_id', $user->id)->first();
+        $user_balance = Deposit::where('user_id', $user->id)->first();
 
         $status = $kyc ? $kyc->status : 'pending';
-        return view('user.home', ['status' => $status]);
+
+        return view('user.home', [
+            'status' => $status,
+            'user_balance' => $user_balance
+        ]);
     }
+
     /**
      * Show the application dashboard.
      *

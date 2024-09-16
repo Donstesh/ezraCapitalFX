@@ -53,8 +53,7 @@
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$145</h6>
-
+                        <h6>${{ $user_balance->amount ?? '0.00' }}</h6>
                     </div>
                   </div>
                 </div>
@@ -74,7 +73,7 @@
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$3,264</h6>
+                        <h6>${{ $user_balance->amount ?? '0.00' }}</h6>
 
                     </div>
                   </div>
@@ -96,7 +95,7 @@
                       <i class="bi bi-calendar-date"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$1,244</h6>
+                        <h6>${{ $user_balance->amount ?? '0.00' }}</h6>
 
                     </div>
                   </div>
