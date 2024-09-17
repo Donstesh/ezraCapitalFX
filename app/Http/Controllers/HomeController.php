@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendOtpMail;
 use App\Mail\WelcomeEmail;
 use App\Models\KycVerify;
+use App\Models\UserPlan;
+use App\Models\Wallet;
+use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Trade;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -25,6 +29,24 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    public function getCryptoPrices()
+    {
+        try {
+            $response = Http::get('https://api.coingecko.com/api/v3/simple/price', [
+                'ids' => 'bitcoin,ethereum,tether',
+                'vs_currencies' => 'gbp',
+            ]);
+    
+            if ($response->ok()) {
+                return response()->json($response->json());
+            } else {
+                return response()->json(['error' => 'Unable to fetch data'], $response->status());
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
+    }    
+    
     /**
      * Show the application dashboard.
      *
@@ -35,7 +57,7 @@ class HomeController extends Controller
         $user = Auth::user();
 
         $kyc = KycVerify::where('user_id', $user->id)->first();
-        $user_balance = Deposit::where('user_id', $user->id)->first();
+        $user_balance = Deposit::where('user_id', $user->id)->where('deposit_status', 'confirmed')->first();
 
         $status = $kyc ? $kyc->status : 'pending';
 
@@ -50,15 +72,6 @@ class HomeController extends Controller
         ]);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function plansList(): View
-    {
-        return view('plans');
-    }
     /**
      * Show the application dashboard.
      *
@@ -172,9 +185,86 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function adminHome(): View
+    public function adminHome()
     {
-        return view('admin.home');
+        $users = User::where('type', 0)->get();
+        $revenue = Deposit::where('deposit_status', 'confirmed')->sum('amount');
+        $countPlans = UserPlan::where('status', 'Active')->count();
+        $countUsers = User::where('type', 0)->count();
+        $viewOrders = UserPlan::all();
+        return view('admin.home', compact('users', 'viewOrders', 'countUsers', 'countPlans', 'revenue'));
+    }
+    public function userDeposit()
+    {
+        $deposits = Deposit::get();
+        return view('admin.deposits', compact('deposits'));
+    }
+    public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:deposits,id',
+            'deposit_status' => 'required|string|in:confirmed,unconfirmed',
+        ]);
+
+        $deposit = Deposit::find($request->id);
+        $deposit->deposit_status = $request->deposit_status;
+
+        if ($request->deposit_status == 'confirmed') {
+            $user = User::find($deposit->user_id);
+            if ($user) {
+                $user->Balance += $deposit->amount;
+                $user->save();
+            }
+        }
+
+        $deposit->save();
+
+        return response()->json(['success' => true, 'message' => 'Deposit status updated successfully.']);
+    }
+    public function viewWallets()
+    {
+        $wallets = Wallet::get();
+
+        return view('admin.wallet-address', compact('wallets'));
+    }
+    public function saveWallet(Request $request)
+    {
+        $request->validate([
+            'qr_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'wallet_name' => 'required|string',
+            'wallet_address' => 'required|string',
+        ]);
+
+        $wallet = new Wallet();
+        $wallet->wallet_name = $request->wallet_name;
+        $wallet->wallet_address = $request->wallet_address;
+        if ($request->hasFile('qr_image')) {
+            $image = $request->file('qr_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/uploads');
+            $image->move($destinationPath, $imageName);
+            $wallet->qr_image = 'uploads/' . $imageName;
+        }
+        $wallet->save();
+
+        return response()->json(['success' => true, 'message' => 'Wallet saved successfully.']);
+    }
+    public function deleteWallet(string $id)
+    {
+        $wallet = Wallet::findOrFail($id);
+        $wallet->delete();
+        return back();
+    }
+    public function viewUsers()
+    {
+        $users = User::where('type', 0)->get();
+        return view('admin.users', compact('users'));
+    }
+    public function deleteUser(string $id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return back();
     }
 
     /**
