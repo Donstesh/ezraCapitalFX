@@ -66,7 +66,13 @@ class HomeController extends Controller
      */
     public function copyTrading(): View
     {
-        return view('copy-trading');
+        $user = Auth::user();
+
+        $user_balance = Deposit::where('user_id', $user->id)->first();
+
+        return view('copy-trading', [
+            'user_balance' => $user_balance,
+        ]);
     }
     /**
      * Show the application dashboard.
@@ -88,10 +94,6 @@ class HomeController extends Controller
     public function miningPlans(): View
     {
         return view('mining-plans');
-    }
-    public function withdrawalRequest(): View
-    {
-        return view('withdrawal');
     }
     public function userAccount(): View
     {
