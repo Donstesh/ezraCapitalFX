@@ -124,6 +124,7 @@ $(document).ready(function() {
                 $('#withdrawalmodal').modal('hide'); // Correct ID here
                 // Optionally clear the form
                 $('#withdrawalForm')[0].reset();
+                location.reload();
             },
             error: function(xhr) {
                 alert('An error occurred while submitting the request');
