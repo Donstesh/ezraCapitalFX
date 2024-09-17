@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\KycVerifyController;
+use App\Http\Controllers\TradeController;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
@@ -56,7 +57,7 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 
     Route::get('/plans', [HomeController::class, 'plansList'])->name('plans');
     Route::get('/copy-trading', [HomeController::class, 'copyTrading'])->name('copy-trading');
-    Route::get('/trading-room', [HomeController::class, 'tradingRoom'])->name('trading-room');
+    Route::get('/trading-room', [TradeController::class, 'index'])->name('trading-room');
     Route::get('/open-trade', [HomeController::class, 'openTrades'])->name('open-trade');
     Route::get('/close-trade', [HomeController::class, 'closedTrades'])->name('close-trade');
     Route::get('/mining', [HomeController::class, 'miningHome'])->name('mining');
