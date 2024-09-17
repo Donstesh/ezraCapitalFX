@@ -14,6 +14,50 @@
       </nav>
     </div><!-- End Page Title -->
 
+
+    <div class="row">
+        @if ($status === 'not_verified')
+            <div class="col-xxl-5 col-md-7">
+                <div class="card info-card sales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Account <span>| KYC Status </span></h5>
+                        <h4 class="justify-content-center fst-italic" style="color: red;">Not Verified
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.293 4.293a1 1 0 0 1 1.414 0L8 5.586l2.293-1.293a1 1 0 0 1 1.414 1.414L9.414 7l2.293 2.293a1 1 0 0 1-1.414 1.414L8 8.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L6.586 7 4.293 4.707a1 1 0 0 1 0-1.414z"/>
+                            </svg>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        @elseif ($status === 'pending')
+            <div class="col-xxl-5 col-md-7">
+                <div class="card info-card sales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Account <span>| KYC Status </span></h5>
+                        <h4 class="justify-content-center fst-italic" style="color: orange;">Under Review
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hourglass" viewBox="0 0 16 16">
+                                <path d="M8 0a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h4zM1 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V8zm7 7a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H8z"/>
+                            </svg>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        @elseif ($status === 'verified')
+            <div class="col-xxl-5 col-md-7">
+                <div class="card info-card sales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Account <span>| KYC Status </span></h5>
+                        <h4 class="justify-content-center fst-italic" style="color: green;">Verified
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 0 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                            </svg>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
+
     <section class="section profile">
       <div class="row">
         <div class="col-xl-4">
@@ -52,85 +96,110 @@
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="identity-docs">
-                  <h5 class="card-title">Account KYC Status</h5>
-
-                @if ($status === 'pending')
-                    <h4 class="justify-content-center fst-italic" style="color: red;">Not Verified
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                            <path d="M4.293 4.293a1 1 0 0 1 1.414 0L8 5.586l2.293-1.293a1 1 0 0 1 1.414 1.414L9.414 7l2.293 2.293a1 1 0 0 1-1.414 1.414L8 8.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L6.586 7 4.293 4.707a1 1 0 0 1 0-1.414z"/>
-                        </svg>
-                    </h4>
-                @else
-                    <h4 class="justify-content-center fst-italic" style="color: green;">Verified
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
-                        </svg>
-                    </h4>
+                  @if ($status === 'not_verified')
+                    <div class="col-xxl-5 col-md-7">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Account <span>| KYC Status</span></h5>
+                                <h4 class="justify-content-center fst-italic" style="color: red;">KYC Not Submitted
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                        <path d="M4.293 4.293a1 1 0 0 1 1.414 0L8 5.586l2.293-1.293a1 1 0 0 1 1.414 1.414L9.414 7l2.293 2.293a1 1 0 0 1-1.414 1.414L8 8.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L6.586 7 4.293 4.707a1 1 0 0 1 0-1.414z"/>
+                                    </svg>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                @elseif ($status === 'pending')
+                    <div class="col-xxl-5 col-md-7">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Account <span>| KYC Status</span></h5>
+                                <h4 class="justify-content-center fst-italic" style="color: orange;">Under Review
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hourglass" viewBox="0 0 16 16">
+                                        <path d="M8 0a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h4zM1 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V8zm7 7a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H8z"/>
+                                    </svg>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                @elseif ($status === 'verified')
+                    <div class="col-xxl-5 col-md-7">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Account <span>| KYC Status</span></h5>
+                                <h4 class="justify-content-center fst-italic" style="color: green;">Verified
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 0 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                    </svg>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
                 @endif
 
-                  <form id="kycForm" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row mb-2">
-                            <label for="exampleSelectGender" class="col-md-4 col-lg-3 col-form-label">Select Document</label>
-                            <div class="col-md-8 col-lg-9">
-                                <select name="document_1" class="form-control" id="exampleSelectGender">
-                                    <option>-- Select Document Type --</option>
-                                    <option>Government Issued Identity Card</option>
-                                    <option>Passport</option>
-                                    <option>Driving Licence</option>
-                                </select>
-                            </div>
+                <form id="kycForm" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row mb-2">
+                        <label for="exampleSelectGender" class="col-md-4 col-lg-3 col-form-label">Select Document</label>
+                        <div class="col-md-8 col-lg-9">
+                            <select name="document_1" class="form-control" id="exampleSelectGender">
+                                <option>-- Select Document Type --</option>
+                                <option>Government Issued Identity Card</option>
+                                <option>Passport</option>
+                                <option>Driving Licence</option>
+                            </select>
                         </div>
+                    </div>
 
-                        <div class="row mb-2">
-                            <label for="selectCountry" class="col-md-4 col-lg-3 col-form-label">Issuing Government</label>
-                            <div class="col-md-8 col-lg-9">
-                                <select name="document_1_govt" class="form-control" id="selectCountry">
-                                    <option value="">-- Select Issuing Government --</option>
-                                    <!-- Dynamically populate countries here -->
-                                </select>
-                            </div>
+                    <div class="row mb-2">
+                        <label for="selectCountry" class="col-md-4 col-lg-3 col-form-label">Issuing Government</label>
+                        <div class="col-md-8 col-lg-9">
+                            <select name="document_1_govt" class="form-control" id="selectCountry">
+                                <option value="">-- Select Issuing Government --</option>
+                                <!-- Dynamically populate countries here -->
+                            </select>
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="document_1_name" class="col-md-4 col-lg-3 col-form-label">Name on Document</label>
-                            <div class="col-md-8 col-lg-9">
-                                <input type="text" name="document_1_name" class="form-control" id="nameOnDocument1" placeholder="Name on Document" required>
-                            </div>
+                    <div class="row mb-3">
+                        <label for="document_1_name" class="col-md-4 col-lg-3 col-form-label">Name on Document</label>
+                        <div class="col-md-8 col-lg-9">
+                            <input type="text" name="document_1_name" class="form-control" id="nameOnDocument1" placeholder="Name on Document" required>
                         </div>
+                    </div>
 
-                        <div class="row mb-3" id="ssnContainer">
-                            <label for="ssn" class="col-md-4 col-lg-3 col-form-label">SSN</label>
-                            <div class="col-md-8 col-lg-9">
-                                <input type="text" name="ssn" class="form-control" id="ssn" placeholder="SSN For American Citizens">
-                            </div>
+                    <div class="row mb-3" id="ssnContainer">
+                        <label for="ssn" class="col-md-4 col-lg-3 col-form-label">SSN</label>
+                        <div class="col-md-8 col-lg-9">
+                            <input type="text" name="ssn" class="form-control" id="ssn" placeholder="SSN For American Citizens">
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="document_1_no" class="col-md-4 col-lg-3 col-form-label">Document Number</label>
-                            <div class="col-md-8 col-lg-9">
-                                <input type="text" name="document_1_no" class="form-control" id="docNumber" placeholder="Document Number" required>
-                            </div>
+                    <div class="row mb-3">
+                        <label for="document_1_no" class="col-md-4 col-lg-3 col-form-label">Document Number</label>
+                        <div class="col-md-8 col-lg-9">
+                            <input type="text" name="document_1_no" class="form-control" id="docNumber" placeholder="Document Number" required>
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="document_1_image_front" class="col-md-4 col-lg-3 col-form-label">Front Side</label>
-                            <div class="col-md-8 col-lg-9">
-                                <input type="file" name="document_1_image_front" class="form-control file-upload-info" id="doc1ImageFront" placeholder="Upload Image">
-                            </div>
+                    <div class="row mb-3">
+                        <label for="document_1_image_front" class="col-md-4 col-lg-3 col-form-label">Front Side</label>
+                        <div class="col-md-8 col-lg-9">
+                            <input type="file" name="document_1_image_front" class="form-control file-upload-info" id="doc1ImageFront" placeholder="Upload Image">
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="document_1_image_back" class="col-md-4 col-lg-3 col-form-label">Back Side</label>
-                            <div class="col-md-8 col-lg-9">
-                                <input type="file" name="document_1_image_back" class="form-control file-upload-info" id="doc1ImageBack" placeholder="Upload Image">
-                            </div>
+                    <div class="row mb-3">
+                        <label for="document_1_image_back" class="col-md-4 col-lg-3 col-form-label">Back Side</label>
+                        <div class="col-md-8 col-lg-9">
+                            <input type="file" name="document_1_image_back" class="form-control file-upload-info" id="doc1ImageBack" placeholder="Upload Image">
                         </div>
+                    </div>
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
 
                 </div>
 

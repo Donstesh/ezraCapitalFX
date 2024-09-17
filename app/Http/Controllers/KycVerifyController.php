@@ -16,10 +16,24 @@ class KycVerifyController extends Controller
     {
         $user = Auth::user();
 
+        // Fetch the KYC record for the logged-in user
         $kyc = KycVerify::where('user_id', $user->id)->first();
 
-        $status = $kyc ? $kyc->status : 'pending';
-        return view('user.profile.kyc', ['status' => $status]);
+        // Determine the status based on the KYC record existence and its status
+        if (!$kyc) {
+            $status = 'not_verified'; // No record found
+        } elseif ($kyc->status === 'pending') {
+            $status = 'pending'; // Record exists but is pending
+        } elseif ($kyc->status === 'verified') {
+            $status = 'verified'; // Record exists and is verified
+        } else {
+            $status = 'unknown'; // Default case if status is not recognized
+        }
+
+        // Return the view with status and user_balance
+        return view('user.profile.kyc', [
+            'status' => $status
+        ]);
     }
 
     /**
