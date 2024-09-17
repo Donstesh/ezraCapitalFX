@@ -90,6 +90,8 @@ class KycVerifyController extends Controller
 
     public function proofOfResidence(Request $request)
     {
+        $user = Auth::user();
+
         $request->validate([
             'document_2' => 'required|string',
             'document_2_name' => 'required|string',
@@ -98,12 +100,12 @@ class KycVerifyController extends Controller
         ]);
 
         $timestamp = date('YmdHis');
-        $fName = str_slug($user->f_name);
-        $lName = str_slug($user->l_name);
+        $fName =  Str::slug($user->f_name);
+        $lName =  Str::slug($user->l_name);
 
         if ($doc2image = $request->file('document_2_image')) {
             $destinationPath = 'kyc-documents/';
-            $kycImage = "{$timestamp}_{$fName}_{$lName}_residence." . $documentImageBackFile->getClientOriginalExtension();
+            $kycImage = "{$timestamp}_{$fName}_{$lName}_residence." . $doc2image->getClientOriginalExtension();
             $doc2image->move(public_path($destinationPath), $kycImage);
         }
 
@@ -132,13 +134,15 @@ class KycVerifyController extends Controller
             'document_3_selfie' => 'required|file|mimes:jpeg,png,jpg|max:2048',
         ]);
 
+        $user = Auth::user();
+
         $timestamp = date('YmdHis');
-        $fName = str_slug($user->f_name);
-        $lName = str_slug($user->l_name);
+        $fName =  Str::slug($user->f_name);
+        $lName =  Str::slug($user->l_name);
 
         if ($selfieImageFile = $request->file('document_3_selfie')) {
             $destinationPath = 'kyc-documents/';
-            $selfieImage = "{$timestamp}_{$fName}_{$lName}_selfie." . $documentImageBackFile->getClientOriginalExtension();
+            $selfieImage = "{$timestamp}_{$fName}_{$lName}_selfie." . $selfieImageFile->getClientOriginalExtension();
             $selfieImageFile->move(public_path($destinationPath), $selfieImage);
         }
 
