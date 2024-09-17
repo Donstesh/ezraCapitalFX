@@ -73,10 +73,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function tradingRoom(): View
-    {
-        return view('trading-room');
-    }
     public function openTrades(): View
     {
         return view('open-trade');
