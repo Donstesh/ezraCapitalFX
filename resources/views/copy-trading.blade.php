@@ -35,6 +35,7 @@
                         <th scope="col">Return Rate</th>
                         <th scope="col">Followers</th>
                         <th scope="col">Profit Share</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -44,6 +45,7 @@
                         <td>64%</td>
                         <td class="fw-bold">124</td>
                         <td>20%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/jackson.jpg" alt="" class="rounded-circle"></a></th>
@@ -51,6 +53,7 @@
                         <td>46%</td>
                         <td class="fw-bold">98</td>
                         <td>40%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/oliver.jpg" alt="" class="rounded-circle"></a></th>
@@ -58,6 +61,7 @@
                         <td>59%</td>
                         <td class="fw-bold">74</td>
                         <td>35%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/sofia.jpg" alt="" class="rounded-circle"></a></th>
@@ -65,6 +69,7 @@
                         <td>32%</td>
                         <td class="fw-bold">163</td>
                         <td>15%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/liam.jpg" alt="" class="rounded-circle"></a></th>
@@ -72,6 +77,7 @@
                         <td>79%</td>
                         <td class="fw-bold">441</td>
                         <td>20%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/lucas.jpg" alt="" class="rounded-circle"></a></th>
@@ -79,6 +85,7 @@
                         <td>49%</td>
                         <td class="fw-bold">41</td>
                         <td>25%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/noah.jpg" alt="" class="rounded-circle"></a></th>
@@ -86,6 +93,7 @@
                         <td>84%</td>
                         <td class="fw-bold">608</td>
                         <td>15%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/william.jpg" alt="" class="rounded-circle"></a></th>
@@ -93,6 +101,7 @@
                         <td>59%</td>
                         <td class="fw-bold">209</td>
                         <td>20%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/alex.jpg" alt="" class="rounded-circle"></a></th>
@@ -100,6 +109,7 @@
                         <td>70%</td>
                         <td class="fw-bold">100</td>
                         <td>10%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/david.jpg" alt="" class="rounded-circle"></a></th>
@@ -107,6 +117,7 @@
                         <td>56%</td>
                         <td class="fw-bold">19</td>
                         <td>40%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/sam.jpg" alt="" class="rounded-circle"></a></th>
@@ -114,6 +125,7 @@
                         <td>79%</td>
                         <td class="fw-bold">368</td>
                         <td>20%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/james.jpg" alt="" class="rounded-circle"></a></th>
@@ -121,6 +133,7 @@
                         <td>80%</td>
                         <td class="fw-bold">790</td>
                         <td>20%</td>
+                        <td><button class="btn btn-outline-success" id="copyTrade" type="submit">Copy</button></td>
                       </tr>
                     </tbody>
                   </table>
@@ -137,4 +150,35 @@
     </section>
 
     </main><!-- End #main -->
+
+    <script>
+        // Example balance, you can modify this value or fetch it dynamically
+        var userBalance = 500; // Replace with actual balance logic
+
+        function checkBalance() {
+            if (userBalance < 1000) {
+                alert('You need a minimum of $1000 to Copy this Traders trade');
+                return false;
+            }
+            // Proceed with trade logic here
+            return true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attach event listeners to all copy buttons
+            var copyButtons = document.querySelectorAll('#copyTrade');
+            copyButtons.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    // Prevent default form submission or button action
+                    event.preventDefault();
+
+                    if (checkBalance()) {
+                        // Perform the trade or other action if balance is sufficient
+                        console.log('Trade action performed');
+                        // Add your trade logic here
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
