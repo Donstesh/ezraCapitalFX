@@ -16,5 +16,8 @@ class Trade extends Model
         'profit',
         'date',
         'trade_status',
+        'trade_type',
+        'trade_time',
+        'leverage',
     ];
 }

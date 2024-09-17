@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('profit')->nullable();
             $table->string('date')->nullable();
             $table->string('trade_status')->nullable();
+            $table->string('trade_type')->nullable();
+            $table->string('trade_time')->nullable();
+            $table->string('leverage')->nullable();
             $table->timestamps();
         });
     }
