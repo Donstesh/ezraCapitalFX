@@ -105,34 +105,39 @@
                             <!-- Table 1 -->
                             <div class="tab-pane fade justify-items-center show active" id="table1" role="tabpanel" aria-labelledby="table1-tab">
                                 <div class="d-flex justify-content-center">
-                                    <form class="row g-3 needs-validation" novalidate style="max-width: 400px; width: 100%;">
+                                    <form class="row g-3 needs-validation" id="timedTradeForm" novalidate style="max-width: 400px; width: 100%;">
 
                                         <div class="col-12">
-                                            <label for="yourUsername" class="form-label">Amount (ACWI)</label>
+                                            <label for="amount" class="form-label">Amount (ACWI)</label>
                                             <div class="input-group has-validation">
-                                                <input type="number" name="username" class="form-control" id="yourUsername" value="0.00" required>
+                                                <input type="number" name="amount" class="form-control" id="amount" value="0.00" required>
                                                 <div class="invalid-feedback">Please enter Amount!</div>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="yourPassword" class="form-label">Leverage (500 MAX)</label>
-                                            <input type="number" name="password" class="form-control" id="yourPassword" value="500" required>
+                                            <label for="leverage" class="form-label">Leverage (500 MAX)</label>
+                                            <input type="text" name="leverage" class="form-control" id="leverage" value="1:500" disabled>
                                             <div class="invalid-feedback">Please enter leverage!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="yourPassword" class="form-label">Time (Minutes)</label>
-                                            <input type="number" name="password" class="form-control" id="yourPassword" value="2" required>
+                                            <label for="trade_time" class="form-label">Time (Minutes)</label>
+                                            <input type="number" name="trade_time" class="form-control" id="trade_time" value="2" required>
                                             <div class="invalid-feedback">Please enter time!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <button class="btn btn-success w-100" type="submit">BUY</button>
+                                            <input type="hidden" name="trade_type" class="form-control" id="trade_type_buy" value="buy" >
+                                            <input type="hidden" name="trade_type" class="form-control" id="trade_type_sell" value="sell">
                                         </div>
 
                                         <div class="col-12">
-                                            <button class="btn btn-danger w-100" type="submit">SELL</button>
+                                            <button class="btn btn-success w-100" type="submit" id="buyButton">BUY</button>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button class="btn btn-danger w-100" type="submit" id="sellButton">SELL</button>
                                         </div>
 
                                     </form>
@@ -188,4 +193,24 @@
     </section>
 
     </main><!-- End #main -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var minimumBalance = 1000;
+        var userBalance = {{ $user_balance->amount ?? 0 }};
+
+        document.getElementById('buyButton').addEventListener('click', function (e) {
+            if (userBalance < minimumBalance) {
+                e.preventDefault(); // Prevent the form from submitting
+                alert('You need a minimum of $1000 to open a trade');
+            }
+        });
+
+        document.getElementById('sellButton').addEventListener('click', function (e) {
+            if (userBalance < minimumBalance) {
+                e.preventDefault(); // Prevent the form from submitting
+                alert('You need a minimum of $1000 to open a trade');
+            }
+        });
+    });
+</script>
 @endsection
