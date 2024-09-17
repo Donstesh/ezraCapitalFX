@@ -69,69 +69,68 @@
                 @endif
 
                   <form id="kycForm" enctype="multipart/form-data">
-    @csrf
-    <div class="row mb-2">
-        <label for="exampleSelectGender" class="col-md-4 col-lg-3 col-form-label">Select Document</label>
-        <div class="col-md-8 col-lg-9">
-            <select name="document_1" class="form-control" id="exampleSelectGender">
-                <option>-- Select Document Type --</option>
-                <option>Government Issued Identity Card</option>
-                <option>Passport</option>
-                <option>Driving Licence</option>
-            </select>
-        </div>
-    </div>
+                        @csrf
+                        <div class="row mb-2">
+                            <label for="exampleSelectGender" class="col-md-4 col-lg-3 col-form-label">Select Document</label>
+                            <div class="col-md-8 col-lg-9">
+                                <select name="document_1" class="form-control" id="exampleSelectGender">
+                                    <option>-- Select Document Type --</option>
+                                    <option>Government Issued Identity Card</option>
+                                    <option>Passport</option>
+                                    <option>Driving Licence</option>
+                                </select>
+                            </div>
+                        </div>
 
-    <div class="row mb-2">
-        <label for="selectCountry" class="col-md-4 col-lg-3 col-form-label">Issuing Government</label>
-        <div class="col-md-8 col-lg-9">
-            <select name="document_1_govt" class="form-control" id="selectCountry">
-                <option value="">-- Select Issuing Government --</option>
-                <!-- Dynamically populate countries here -->
-            </select>
-        </div>
-    </div>
+                        <div class="row mb-2">
+                            <label for="selectCountry" class="col-md-4 col-lg-3 col-form-label">Issuing Government</label>
+                            <div class="col-md-8 col-lg-9">
+                                <select name="document_1_govt" class="form-control" id="selectCountry">
+                                    <option value="">-- Select Issuing Government --</option>
+                                    <!-- Dynamically populate countries here -->
+                                </select>
+                            </div>
+                        </div>
 
-    <div class="row mb-3">
-        <label for="document_1_name" class="col-md-4 col-lg-3 col-form-label">Name on Document</label>
-        <div class="col-md-8 col-lg-9">
-            <input type="text" name="document_1_name" class="form-control" id="nameOnDocument1" placeholder="Name on Document" required>
-        </div>
-    </div>
+                        <div class="row mb-3">
+                            <label for="document_1_name" class="col-md-4 col-lg-3 col-form-label">Name on Document</label>
+                            <div class="col-md-8 col-lg-9">
+                                <input type="text" name="document_1_name" class="form-control" id="nameOnDocument1" placeholder="Name on Document" required>
+                            </div>
+                        </div>
 
-    <div class="row mb-3" id="ssnContainer">
-        <label for="ssn" class="col-md-4 col-lg-3 col-form-label">SSN</label>
-        <div class="col-md-8 col-lg-9">
-            <input type="text" name="ssn" class="form-control" id="ssn" placeholder="SSN For American Citizens">
-        </div>
-    </div>
+                        <div class="row mb-3" id="ssnContainer">
+                            <label for="ssn" class="col-md-4 col-lg-3 col-form-label">SSN</label>
+                            <div class="col-md-8 col-lg-9">
+                                <input type="text" name="ssn" class="form-control" id="ssn" placeholder="SSN For American Citizens">
+                            </div>
+                        </div>
 
-    <div class="row mb-3">
-        <label for="document_1_no" class="col-md-4 col-lg-3 col-form-label">Document Number</label>
-        <div class="col-md-8 col-lg-9">
-            <input type="text" name="document_1_no" class="form-control" id="docNumber" placeholder="Document Number" required>
-        </div>
-    </div>
+                        <div class="row mb-3">
+                            <label for="document_1_no" class="col-md-4 col-lg-3 col-form-label">Document Number</label>
+                            <div class="col-md-8 col-lg-9">
+                                <input type="text" name="document_1_no" class="form-control" id="docNumber" placeholder="Document Number" required>
+                            </div>
+                        </div>
 
-    <div class="row mb-3">
-        <label for="document_1_image_front" class="col-md-4 col-lg-3 col-form-label">Front Side</label>
-        <div class="col-md-8 col-lg-9">
-            <input type="file" name="document_1_image_front" class="form-control file-upload-info" id="doc1ImageFront" placeholder="Upload Image">
-        </div>
-    </div>
+                        <div class="row mb-3">
+                            <label for="document_1_image_front" class="col-md-4 col-lg-3 col-form-label">Front Side</label>
+                            <div class="col-md-8 col-lg-9">
+                                <input type="file" name="document_1_image_front" class="form-control file-upload-info" id="doc1ImageFront" placeholder="Upload Image">
+                            </div>
+                        </div>
 
-    <div class="row mb-3">
-        <label for="document_1_image_back" class="col-md-4 col-lg-3 col-form-label">Back Side</label>
-        <div class="col-md-8 col-lg-9">
-            <input type="file" name="document_1_image_back" class="form-control file-upload-info" id="doc1ImageBack" placeholder="Upload Image">
-        </div>
-    </div>
+                        <div class="row mb-3">
+                            <label for="document_1_image_back" class="col-md-4 col-lg-3 col-form-label">Back Side</label>
+                            <div class="col-md-8 col-lg-9">
+                                <input type="file" name="document_1_image_back" class="form-control file-upload-info" id="doc1ImageBack" placeholder="Upload Image">
+                            </div>
+                        </div>
 
-    <div class="text-center">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
-
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
 
                 </div>
 
