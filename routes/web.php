@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\KycVerifyController;
 use App\Http\Controllers\TradeController;
+use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
@@ -62,7 +63,8 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/close-trade', [HomeController::class, 'closedTrades'])->name('close-trade');
     Route::get('/mining', [HomeController::class, 'miningHome'])->name('mining');
     Route::get('/mining-plans', [HomeController::class, 'miningPlans'])->name('mining-plans');
-    Route::get('/withdrawal', [HomeController::class, 'withdrawalRequest'])->name('withdrawal');
+    Route::get('/withdrawal', [WithdrawalController::class, 'index'])->name('withdrawal');
+    Route::post('/submit-withdrawal', [WithdrawalController::class, 'withdrawalRequest'])->name('withdrawals.store');
     Route::get('/my-account', [HomeController::class, 'userAccount'])->name('my-account');
     Route::get('/kyc', [KycVerifyController::class, 'index'])->name('kyc');
     Route::post('/kyc', [KycVerifyController::class, 'personaDetails'])->name('kyc.store');
