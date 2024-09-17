@@ -48,8 +48,8 @@ class KycVerifyController extends Controller
             'document_1_name' => 'required|string|max:255',
             'ssn' => 'nullable|string|max:20',
             'document_1_no' => 'required|string|max:50',
-            'document_1_image_front' => 'required|file|mimes:jpeg,png,jpg|max:2048',
-            'document_1_image_back' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+            'document_1_image_front' => 'required|file|mimes:jpeg,png,jpg|max:15360', // 15MB
+            'document_1_image_back' => 'required|file|mimes:jpeg,png,jpg|max:15360',  // 15MB
         ]);
 
         $user = Auth::user();
@@ -96,7 +96,7 @@ class KycVerifyController extends Controller
             'document_2' => 'required|string',
             'document_2_name' => 'required|string',
             'address' => 'required|string|max:255',
-            'document_2_image' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+            'document_2_image' => 'required|file|mimes:jpeg,png,jpg|max:15360',
         ]);
 
         $timestamp = date('YmdHis');
@@ -131,7 +131,7 @@ class KycVerifyController extends Controller
     public function selfie(Request $request)
     {
         $request->validate([
-            'document_3_selfie' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+            'document_3_selfie' => 'required|file|mimes:jpeg,png,jpg|max:15360',
         ]);
 
         $user = Auth::user();
