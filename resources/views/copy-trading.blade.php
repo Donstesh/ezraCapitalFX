@@ -157,7 +157,7 @@
 
         function checkBalance() {
             if (userBalance < 1000) {
-                alert('You need a minimum of $1000 to Copy this Traders trade');
+                alert('You need a minimum of £1000 to Copy this Traders trade');
                 return false;
             }
             // Proceed with trade logic here

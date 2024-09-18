@@ -29,7 +29,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Bronze</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £9,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -70,7 +70,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Silver</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £59,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -111,7 +111,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Gold</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £99,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">

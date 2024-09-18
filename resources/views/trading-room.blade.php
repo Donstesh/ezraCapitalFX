@@ -201,14 +201,14 @@
         document.getElementById('buyButton').addEventListener('click', function (e) {
             if (userBalance < minimumBalance) {
                 e.preventDefault(); // Prevent the form from submitting
-                alert('You need a minimum of $1000 to open a trade');
+                alert('You need a minimum of £1000 to open a trade');
             }
         });
 
         document.getElementById('sellButton').addEventListener('click', function (e) {
             if (userBalance < minimumBalance) {
                 e.preventDefault(); // Prevent the form from submitting
-                alert('You need a minimum of $1000 to open a trade');
+                alert('You need a minimum of £1000 to open a trade');
             }
         });
     });

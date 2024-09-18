@@ -18,6 +18,27 @@
         <h1>Pricing</h1>
     </div>
 
+    <!-- Modal HTML -->
+    <div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="planModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="planModalLabel">Confirm Your Plan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <p id="modalPlanDetails"></p>
+                    <p id="modalPlanAmount"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmPlan">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="bsb-pricing-1 bg-light py-3 py-md-5 py-xl-8">
     <div class="row">
     <div class="container d-flex justify-content-center">
@@ -29,11 +50,11 @@
             <div class="row justify-content-xl-end">
             <div class="col-12 col-xl-11">
                 <div class="row justify-content">
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-3" id="tradingBronze">
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Bronze</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -54,7 +75,7 @@
                             <span><strong>Spreads</strong> 1.2 pips</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Choose Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Choose Plan</a>
                     </div>
                     </div>
                 </div>
@@ -62,7 +83,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Silver</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £3,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -83,7 +104,7 @@
                             <span><strong>Spreads</strong> 0.8 pips</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Choose Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Choose Plan</a>
                     </div>
                     </div>
                 </div>
@@ -91,7 +112,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Gold</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £5,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -118,7 +139,7 @@
                             <span><strong>Spreads</strong>from 0.8 pips</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Choose Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Choose Plan</a>
                     </div>
                     </div>
                 </div>
@@ -126,7 +147,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Platinum</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £9,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -153,7 +174,7 @@
                             <span><strong>Spreads</strong> from 0.3 pips</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Choose Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Choose Plan</a>
                     </div>
                     </div>
                 </div>
@@ -180,7 +201,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Gold</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -189,7 +210,7 @@
                             <span><strong>+25%</strong> Signal Strength</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
                     </div>
                     </div>
                 </div>
@@ -197,7 +218,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Silver</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £5,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -206,7 +227,7 @@
                             <span><strong>+15%</strong> Signal Strength</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
                     </div>
                     </div>
                 </div>
@@ -214,7 +235,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Bronze</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £9,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -223,7 +244,7 @@
                             <span><strong>+5%</strong> Signal Strength</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
                     </div>
                     </div>
                 </div>
@@ -250,7 +271,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Bronze</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £9,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -283,7 +304,7 @@
                             <span><strong>No</strong> Electricity Cost</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
                     </div>
                     </div>
                 </div>
@@ -291,7 +312,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Silver</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £59,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -324,7 +345,7 @@
                             <span><strong>No</strong> Electricity Cost</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
                     </div>
                     </div>
                 </div>
@@ -332,7 +353,7 @@
                     <div class="card border-0 border-bottom border-primary shadow-lg pt-md-4 pb-md-4 bsb-pricing-popular">
                     <div class="card-body ">
                         <h2 class="h4 mb-2">Gold</h2>
-                        <h4 class=" fw-bold text-primary mb-0">$149</h4>
+                        <h4 class=" fw-bold text-primary mb-0"> £99,999</h4>
                         <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -365,7 +386,7 @@
                             <span><strong>No</strong> Electricity Cost</span>
                         </li>
                         </ul>
-                        <a href="#!" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
+                        <a href="#"  id="confirmPlan" class="btn bsb-btn-xl btn-primary rounded-pill">Purchase Plan</a>
                     </div>
                     </div>
                 </div>
@@ -378,4 +399,62 @@
     </section>
 
     </main><!-- End #main -->
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    let selectedPlan = null;
+
+    document.querySelectorAll('.btn-primary').forEach(button => {
+        button.addEventListener('click', function() {
+            const planCard = this.closest('.card');
+            const planName = planCard.querySelector('h2').textContent;
+            const planAmount = planCard.querySelector('h4').textContent;
+
+            // Find the closest section that contains the <h3> element
+            const section = this.closest('section');
+            const planOption = section.querySelector('h3').textContent;
+
+            selectedPlan = {
+                name: planName,
+                amount: planAmount,
+                option: planOption
+            };
+
+            // Display selected plan details in the modal
+            document.getElementById('modalPlanDetails').textContent = `You have selected the ${planOption} ${planName} plan.`;
+            document.getElementById('modalPlanAmount').textContent = `Amount: ${planAmount}`;
+
+            // Show the modal
+            $('#planModal').modal('show');
+        });
+    });
+
+    document.getElementById('confirmPlan').addEventListener('click', function() {
+        if (selectedPlan) {
+            fetch('/select-plan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    plan_name: selectedPlan.name,
+                    plan_amount: selectedPlan.amount,
+                    plan_option: selectedPlan.option
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Plan saved successfully!');
+                    $('#planModal').modal('hide');
+                } else {
+                    alert('Error saving plan.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+});
+</script>
+
 @endsection
