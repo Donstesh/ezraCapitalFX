@@ -53,8 +53,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        // Step 3: Send the OTP to the user's email
-        Mail::to($user->email)->send(new SendOtpMail($otp));
+        // Step 3: Send the OTP to the user's email via queue
+        Mail::to($user->email)->queue(new SendOtpMail($otp));
 
         return $user;
     }

@@ -7,8 +7,9 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendOtpMail extends Mailable
+class SendOtpMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -16,6 +17,8 @@ class SendOtpMail extends Mailable
 
     /**
      * Create a new message instance.
+     *
+     * @param string $otp
      */
     public function __construct($otp)
     {
