@@ -164,7 +164,7 @@ class HomeController extends Controller
             $user->save();
 
             // Send welcome email
-            Mail::to($user->email)->send(new WelcomeEmail($user));
+            Mail::to($user->email)->queue(new WelcomeEmail($user));
 
             return redirect()->route('home')->with('success', 'OTP verified successfully.');
         }
@@ -182,7 +182,7 @@ class HomeController extends Controller
         // Check if the OTP was sent within the last 10 minutes
         if ($otpSentAt && $otpSentAt->gt(Carbon::now()->subMinutes(10))) {
             // Resend the last OTP
-            Mail::to($user->email)->send(new SendOtpMail($user->otp));
+            Mail::to($user->email)->queue(new SendOtpMail($user->otp));
         } else {
             // Generate a new OTP
             $otp = mt_rand(100000, 999999);
@@ -191,7 +191,7 @@ class HomeController extends Controller
             $user->save();
 
             // Send the new OTP
-            Mail::to($user->email)->send(new SendOtpMail($otp));
+            Mail::to($user->email)->queue(new SendOtpMail($otp));
         }
 
         return back()->with('status', 'OTP has been sent to your email.');
