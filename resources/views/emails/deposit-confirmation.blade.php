@@ -1,7 +1,7 @@
 <x-mail::message>
 # Deposit Confirmation
 
-Dear {{ Auth::user()->f_name }} {{ Auth::user()->l_name }},
+Hello {{ $deposit->user ? $deposit->user->f_name : 'User' }},
 
 Your deposit request has been successfully received. Please wait for confirmation. Here are the details:
 

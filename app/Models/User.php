@@ -65,4 +65,8 @@ class User extends Authenticatable
             get: fn ($value) =>  ["user", "admin", "manager"][$value],
         );
     }
+    public function deposits()
+    {
+        return $this->hasMany(Deposit::class, 'user_id');
+    }
 }
