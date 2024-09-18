@@ -7,7 +7,9 @@ use App\Models\Deposit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DepositConfirmation;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; 
 use Log;
 
 class WalletController extends Controller
@@ -64,31 +66,46 @@ class WalletController extends Controller
     }
     public function depositRequest(Request $request)
     {
+        // Validate the input
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0.00000001|regex:/^\d+(\.\d{1,8})?$/',
             'deposit_method' => 'required|string',
             'amount_in_gbp' => 'required|string',
         ]);
 
-        $trxId = $this->generateTrxId();
+        $trxId = $this->generateTrxId(); // Assuming this is a method in the controller
         $user = Auth::user();
-        $deposit = Deposit::create([
-            'user_id' => Auth::id(),
-            'amount' => $validated['amount'],
-            'amount_in_gbp' => $validated['amount_in_gbp'],
-            'deposit_method' => $validated['deposit_method'],
-            'deposit_status' => 'unconfirmed',
-            'trx_id' => $trxId,
-        ]);
-        
-        try {
-            Mail::to($user->email)->send(new DepositConfirmation($deposit));
-        } catch (\Exception $e) {
-            Log::error('Email sending failed: ' . $e->getMessage());
-        }
-        return response()->json(['message' => 'Deposit successful']);
-    }
 
+        // Using a database transaction to ensure atomicity
+        DB::beginTransaction();
+
+        try {
+            // Create the deposit record
+            $deposit = Deposit::create([
+                'user_id' => $user->id,
+                'amount' => $validated['amount'],
+                'amount_in_gbp' => $validated['amount_in_gbp'],
+                'deposit_method' => $validated['deposit_method'],
+                'deposit_status' => 'unconfirmed',
+                'trx_id' => $trxId,
+            ]);         
+
+            // Send confirmation email (queued)
+            Mail::to($user->email)->queue(new DepositConfirmation($deposit));
+
+            // Commit the transaction if everything goes well
+            DB::commit();
+
+            return response()->json(['message' => 'Deposit successful, confirmation email sent.']);
+            
+        } catch (\Exception $e) {
+            // Rollback the transaction in case of any failure
+            DB::rollBack();
+
+            // General error response
+            return response()->json(['message' => 'An error occurred during the deposit process. Please try again later.'], 500);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */

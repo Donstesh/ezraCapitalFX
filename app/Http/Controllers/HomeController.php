@@ -17,6 +17,8 @@ use App\Models\Trade;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use App\Mail\DepositConfirmationMail;
+use Illuminate\Support\Facades\DB; 
 
 class HomeController extends Controller
 {
@@ -215,23 +217,27 @@ class HomeController extends Controller
     }
     public function updateStatus(Request $request)
     {
+        // Validate the input
         $request->validate([
             'id' => 'required|exists:deposits,id',
             'deposit_status' => 'required|string|in:confirmed,unconfirmed',
         ]);
 
+        // Find the deposit record
         $deposit = Deposit::find($request->id);
+
+        // Update the deposit status
         $deposit->deposit_status = $request->deposit_status;
-
-        if ($request->deposit_status == 'confirmed') {
-            $user = User::find($deposit->user_id);
-            if ($user) {
-                $user->Balance += $deposit->amount;
-                $user->save();
-            }
-        }
-
         $deposit->save();
+
+        // Check if status is confirmed
+        if ($request->deposit_status == 'confirmed') {
+            // Fetch the user's email using the user_id from the deposits table
+            $user = $deposit->user; // Assuming there is a relationship defined in the Deposit model
+
+            // Send a confirmation email
+            Mail::to($user->email)->queue(new DepositConfirmationMail($deposit));
+        }
 
         return response()->json(['success' => true, 'message' => 'Deposit status updated successfully.']);
     }
