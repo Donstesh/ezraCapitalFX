@@ -20,19 +20,33 @@
             <div class="col-xxl-5 col-md-7">
                 <div class="card info-card sales-card">
                     <div class="card-body">
-                        <h5 class="card-title">Account <span>| KYC Status </span></h5>
+                        <h5 class="card-title">Account <span>| KYC Status</span></h5>
                         <h4 class="justify-content-center fst-italic" style="color: red;">Not Verified
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                                 <path d="M4.293 4.293a1 1 0 0 1 1.414 0L8 5.586l2.293-1.293a1 1 0 0 1 1.414 1.414L9.414 7l2.293 2.293a1 1 0 0 1-1.414 1.414L8 8.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L6.586 7 4.293 4.707a1 1 0 0 1 0-1.414z"/>
                             </svg>
                         </h4>
-                        <a href="{{url('kyc')}}">Verify Now</a>
+                        <a href="{{ url('kyc') }}">Verify Now</a>
+                    </div>
+                </div>
+            </div>
+        @elseif ($status === 'rejected')
+            <div class="col-xxl-5 col-md-7">
+                <div class="card info-card sales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Account <span>| KYC Status</span></h5>
+                        <h4 class="justify-content-center fst-italic" style="color: red;">Rejected
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.293 4.293a1 1 0 0 1 1.414 0L8 5.586l2.293-1.293a1 1 0 0 1 1.414 1.414L9.414 7l2.293 2.293a1 1 0 0 1-1.414 1.414L8 8.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L6.586 7 4.293 4.707a1 1 0 0 1 0-1.414z"/>
+                            </svg>
+                        </h4>
+                        <p>Please re-submit your verification details and documents.</p>
+                        <a href="{{ url('kyc') }}">Resend Verification</a>
                     </div>
                 </div>
             </div>
         @endif
     </div>
-
 
     <section class="section dashboard">
       <div class="row">
