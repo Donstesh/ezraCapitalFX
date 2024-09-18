@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendOtpMail;
 use App\Mail\WelcomeEmail;
+use App\Mail\KycVerifyMail;
 use App\Models\KycVerify;
 use App\Models\UserPlan;
 use App\Models\Wallet;
@@ -299,9 +300,19 @@ class HomeController extends Controller
         ]);
 
         $kyc = KycVerify::find($request->id);
-        $kyc->status = $request->status;
+        $previousStatus = $kyc->status;  // Capture the previous status
 
+        $kyc->status = $request->status;
         $kyc->save();
+
+        // Send email only if the status changes to 'verified' or 'rejected'
+        if ($previousStatus !== $request->status) {
+            $user = $kyc->user();
+
+            if ($user) {
+                Mail::to($user->email)->queue(new KycVerifyMail($request->status, $user->f_name));
+            }
+        }
 
         return response()->json(['success' => true, 'message' => 'KYC status updated successfully.']);
     }

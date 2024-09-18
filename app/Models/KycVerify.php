@@ -29,4 +29,9 @@ class KycVerify extends Model
         'document_2_exp_date',
         'document_3_selfie'
     ];
+
+    public function user()
+    {
+        return User::where('email', $this->email)->first();
+    }
 }
