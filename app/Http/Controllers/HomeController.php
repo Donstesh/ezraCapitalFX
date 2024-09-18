@@ -16,6 +16,7 @@ use App\Models\Deposit;
 use App\Models\Trade;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -32,21 +33,34 @@ class HomeController extends Controller
     public function getCryptoPrices()
     {
         try {
-            $response = Http::get('https://api.coingecko.com/api/v3/simple/price', [
-                'ids' => 'bitcoin,ethereum,tether',
-                'vs_currencies' => 'gbp',
-            ]);
-    
-            if ($response->ok()) {
-                return response()->json($response->json());
-            } else {
-                return response()->json(['error' => 'Unable to fetch data'], $response->status());
-            }
+            // Check if prices are cached
+            $cryptoData = Cache::remember('crypto_prices', 60, function () {
+                // Fetch from API with a longer timeout
+                $response = Http::timeout(30)->get('https://api.coingecko.com/api/v3/simple/price', [
+                    'ids' => 'bitcoin,ethereum,tether',
+                    'vs_currencies' => 'gbp',
+                ]);
+
+                // Log the response body for debugging
+                \Log::info('API Response:', ['response' => $response->body()]);
+
+                // Check if response is JSON
+                if ($response->ok()) {
+                    $json = $response->json(); // Try parsing JSON
+                    return $json;
+                } else {
+                    throw new \Exception('Unable to fetch data from the API');
+                }
+            });
+
+            return response()->json($cryptoData);
+
         } catch (\Exception $e) {
+            \Log::error('Error fetching crypto prices:', ['error' => $e->getMessage()]);
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
-    }    
-    
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -265,6 +279,25 @@ class HomeController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return back();
+    }
+    public function viewUsersKYC()
+    {
+        $userskyc = KycVerify::get();
+        return view('admin.kyc-verification', compact('userskyc'));
+    }
+    public function verifyKYC(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:kyc_verifies,id',
+            'status' => 'required|string|in:pending,verified,rejected',
+        ]);
+
+        $kyc = KycVerify::find($request->id);
+        $kyc->status = $request->status;
+
+        $kyc->save();
+
+        return response()->json(['success' => true, 'message' => 'KYC status updated successfully.']);
     }
 
     /**
