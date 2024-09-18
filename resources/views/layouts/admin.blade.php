@@ -43,42 +43,7 @@
                             <button type="button" id="navbar-fullscreen" class="nav-link"><i class="ik ik-maximize"></i></button>
                         </div>
                         <div class="top-menu d-flex align-items-center">
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="notiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-bell"></i><span class="badge bg-danger">3</span></a>
-                                <div class="dropdown-menu dropdown-menu-right notification-dropdown" aria-labelledby="notiDropdown">
-                                    <h4 class="header">Notifications</h4>
-                                    <div class="notifications-wrap">
-                                        <a href="#" class="media">
-                                            <span class="d-flex">
-                                                <i class="ik ik-check"></i> 
-                                            </span>
-                                            <span class="media-body">
-                                                <span class="heading-font-family media-heading">Invitation accepted</span> 
-                                                <span class="media-content">Your have been Invited ...</span>
-                                            </span>
-                                        </a>
-                                        <a href="#" class="media">
-                                            <span class="d-flex">
-                                                <img src="admin/img/users/1.jpg" class="rounded-circle" alt="">
-                                            </span>
-                                            <span class="media-body">
-                                                <span class="heading-font-family media-heading">Steve Smith</span> 
-                                                <span class="media-content">I slowly updated projects</span>
-                                            </span>
-                                        </a>
-                                        <a href="#" class="media">
-                                            <span class="d-flex">
-                                                <i class="ik ik-calendar"></i> 
-                                            </span>
-                                            <span class="media-body">
-                                                <span class="heading-font-family media-heading">To Do</span> 
-                                                <span class="media-content">Meeting with Nathan on Friday 8 AM ...</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div class="footer"><a href="javascript:void(0);">See all activity</a></div>
-                                </div>
-                            </div>
+                            
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="admin/img/user.jpg" alt=""></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -114,29 +79,23 @@
                                     <a href="{{url('adminHome')}}"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
                                 </div>
                                 <div class="nav-item">
-                                    <a href="{{url('view-products')}}"><i class="ik ik-menu"></i><span>Products</span></a>
+                                    <a href="{{url('kyc-verification')}}"><i class="ik ik-user"></i><span>Kyc Verification</span></a>
                                 </div>
                                 <div class="nav-item">
                                     <a href="{{url('user-deposits')}}"><i class="ik ik-dollar-sign"></i><span>User Deposits</span></a>
                                 </div>
                                 <div class="nav-item has-sub">
-                                    <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Orders</span></a>
+                                    <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Plans</span></a>
                                     <div class="submenu-content">
-                                        <a href="{{url('new-orders')}}" class="menu-item">New Orders<span class="badge badge-success">New</span></a>
-                                        <a href="{{url('complete-orders')}}" class="menu-item">Complete Orders</a>
+                                        <a href="{{url('new-orders')}}" class="menu-item">Active Plans<span class="badge badge-success">New</span></a>
+                                        <a href="{{url('complete-orders')}}" class="menu-item">Inactive Plans</a>
                                     </div>
                                 </div>
                                 <div class="nav-item">
                                     <a href="{{url('view-users')}}"><i class="ik ik-users"></i><span>Registered Users</span></a>
                                 </div>
                                 <div class="nav-lavel">Setup</div>
-                                <div class="nav-item has-sub">
-                                    <a href="#"><i class="ik ik-box"></i><span>Category Setup</span></a>
-                                    <div class="submenu-content">
-                                        <a href="{{url('category-setup')}}" class="menu-item">Main Category</a>
-                                        <a href="{{url('category-setup')}}" class="menu-item">Category</a>
-                                    </div>
-                                </div>
+                                
                                 <div class="nav-item">
                                     <a href="{{url('view-wallets')}}"><i class="ik ik-command"></i><span>Wallet Address</span></a>
                                 </div>
