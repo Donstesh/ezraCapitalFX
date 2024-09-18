@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('deposit_method');
             $table->decimal('amount', 20, 8);
+            $table->string('amount_in_gbp');
             $table->string('deposit_status')->default('unconfirmed');
             $table->string('trx_id');
             $table->timestamps();
