@@ -108,6 +108,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('delete-user/{id}',[HomeController::class, 'deleteUser'])->name('admin.user.delete');
     Route::get('/site-setup',[HomeController::class, 'viewSetup'])->name('admin.site-setup');
     Route::post('/support-settings', [HomeController::class, 'saveSupportSettings'])->name('admin.support.save');
+
+    Route::get('/kyc-verification',[HomeController::class, 'viewUsersKYC'])->name('admin.kyc-verification');
+    Route::post('/kyc-verify', [HomeController::class, 'verifyKYC'])->name('admin.kyc-verify');
 });
 
 /*------------------------------------------
