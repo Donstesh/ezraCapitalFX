@@ -41,9 +41,10 @@ class SendOtpMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'emails.otp',
+            markdown: 'emails.otp',
         );
     }
+
 
     /**
      * Get the attachments for the message.
