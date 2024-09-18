@@ -46,6 +46,8 @@ class UserPlanController extends Controller
             'status' => 'Active'  // You can customize this based on your requirements
         ]);
 
+        Mail::to($userEmail)->queue(new PlanPurchasedMail($userPlan));
+
         return response()->json(['success' => true]);
     }
 
