@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DepositConfirmation;
 use Illuminate\Http\Request;
+use Log;
 
 class WalletController extends Controller
 {
@@ -66,21 +67,25 @@ class WalletController extends Controller
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0.00000001|regex:/^\d+(\.\d{1,8})?$/',
             'deposit_method' => 'required|string',
+            'amount_in_gbp' => 'required|string',
         ]);
 
         $trxId = $this->generateTrxId();
-
+        $user = Auth::user();
         $deposit = Deposit::create([
             'user_id' => Auth::id(),
             'amount' => $validated['amount'],
+            'amount_in_gbp' => $validated['amount_in_gbp'],
             'deposit_method' => $validated['deposit_method'],
             'deposit_status' => 'unconfirmed',
             'trx_id' => $trxId,
         ]);
-
-        // Send confirmation email
-        Mail::to(Auth::user()->email)->send(new DepositConfirmation($deposit));
-
+        
+        try {
+            Mail::to($user->email)->send(new DepositConfirmation($deposit));
+        } catch (\Exception $e) {
+            Log::error('Email sending failed: ' . $e->getMessage());
+        }
         return response()->json(['message' => 'Deposit successful']);
     }
 
