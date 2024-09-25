@@ -8,6 +8,7 @@ use App\Http\Controllers\KycVerifyController;
 use App\Http\Controllers\TradeController;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\UserPlanController;
+use App\Http\Controllers\SetupController;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
@@ -25,6 +26,13 @@ Route::get('/faq', function () {
     return view('faq');
 });
 
+Route::get('/trigger-queue', [HomeController::class, 'triggerQueue']);
+
+
+Route::get('/clear-cache', [SetupController::class, 'clearCache']);
+Route::get('/clear-config', [SetupController::class, 'clearConfig']);
+Route::get('/clear-view', [SetupController::class, 'clearView']);
+
 Auth::routes();
 
 Route::get('/otp-verify', [HomeController::class, 'showOtpForm'])->name('otp.verify');
@@ -34,7 +42,7 @@ Route::post('/request-otp', [HomeController::class, 'requestOtp'])->name('reques
 Route::get('/test-email', function () {
     try {
         Mail::raw('This is a test email', function ($message) {
-            $message->to('donstesh@gmail.com')
+            $message->to('rosetstesh@gmail.com')
                     ->subject('Test Email');
         });
         return 'Email sent successfully!';

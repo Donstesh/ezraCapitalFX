@@ -54,7 +54,7 @@ class RegisterController extends Controller
         ]);
 
         // Step 3: Send the OTP to the user's email via queue
-        Mail::to($user->email)->queue(new SendOtpMail($otp));
+        Mail::to($user->email)->send(new SendOtpMail($otp));
 
         return $user;
     }

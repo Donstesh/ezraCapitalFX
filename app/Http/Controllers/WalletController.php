@@ -91,7 +91,7 @@ class WalletController extends Controller
             ]);         
 
             // Send confirmation email (queued)
-            Mail::to($user->email)->queue(new DepositConfirmation($deposit));
+            Mail::to($user->email)->send(new DepositConfirmation($deposit));
 
             // Commit the transaction if everything goes well
             DB::commit();

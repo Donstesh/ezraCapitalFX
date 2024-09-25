@@ -19,7 +19,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use App\Mail\DepositConfirmationMail;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
+use Log;
 
 class HomeController extends Controller
 {
@@ -31,6 +33,11 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+    public function triggerQueue()
+    {
+        Artisan::call('queue:work --queue=default --once');
+        return response()->json(['status' => 'Queue processed']);
     }
 
     public function getCryptoPrices()
@@ -164,7 +171,7 @@ class HomeController extends Controller
             $user->save();
 
             // Send welcome email
-            Mail::to($user->email)->queue(new WelcomeEmail($user));
+            Mail::to($user->email)->send(new WelcomeEmail($user));
 
             return redirect()->route('home')->with('success', 'OTP verified successfully.');
         }
@@ -182,7 +189,15 @@ class HomeController extends Controller
         // Check if the OTP was sent within the last 10 minutes
         if ($otpSentAt && $otpSentAt->gt(Carbon::now()->subMinutes(10))) {
             // Resend the last OTP
-            Mail::to($user->email)->queue(new SendOtpMail($user->otp));
+            Mail::to($user->email)->send(new SendOtpMail($user->otp));
+
+            // Log the resend action
+            Log::info('OTP resent to user.', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'otp' => $user->otp,
+                'otp_sent_at' => $otpSentAt->toDateTimeString(),
+            ]);
         } else {
             // Generate a new OTP
             $otp = mt_rand(100000, 999999);
@@ -191,12 +206,19 @@ class HomeController extends Controller
             $user->save();
 
             // Send the new OTP
-            Mail::to($user->email)->queue(new SendOtpMail($otp));
+            Mail::to($user->email)->send(new SendOtpMail($otp));
+
+            // Log the new OTP generation and email sent
+            Log::info('New OTP generated and sent to user.', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'otp' => $otp,
+                'otp_sent_at' => $user->otp_sent_at->toDateTimeString(),
+            ]);
         }
 
         return back()->with('status', 'OTP has been sent to your email.');
     }
-
     /**
      * Show the application dashboard.
      *
@@ -237,7 +259,7 @@ class HomeController extends Controller
             $user = $deposit->user; // Assuming there is a relationship defined in the Deposit model
 
             // Send a confirmation email
-            Mail::to($user->email)->queue(new DepositConfirmationMail($deposit));
+            Mail::to($user->email)->send(new DepositConfirmationMail($deposit));
         }
 
         return response()->json(['success' => true, 'message' => 'Deposit status updated successfully.']);
@@ -293,29 +315,42 @@ class HomeController extends Controller
         return view('admin.kyc-verification', compact('userskyc'));
     }
     public function verifyKYC(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:kyc_verifies,id',
-            'status' => 'required|string|in:pending,verified,rejected',
-        ]);
+{
+    $request->validate([
+        'id' => 'required|exists:kyc_verifies,id',
+        'status' => 'required|string|in:pending,verified,rejected',
+    ]);
 
-        $kyc = KycVerify::find($request->id);
-        $previousStatus = $kyc->status;  // Capture the previous status
+    $kyc = KycVerify::find($request->id);
+    $previousStatus = $kyc->status;  // Capture the previous status
 
-        $kyc->status = $request->status;
-        $kyc->save();
+    $kyc->status = $request->status;
+    $kyc->save();
 
-        // Send email only if the status changes to 'verified' or 'rejected'
-        if ($previousStatus !== $request->status) {
-            $user = $kyc->user();
+    // Send email only if the status changes to 'verified' or 'rejected'
+    if ($previousStatus !== $request->status && in_array($request->status, ['verified', 'rejected'])) {
+        // Send the email using the email field in KycVerify
+        $userEmail = $kyc->email;
+        $userName = $kyc->f_name;  // Assuming f_name is the user's first name
 
-            if ($user) {
-                Mail::to($user->email)->queue(new KycVerifyMail($request->status, $user->f_name));
+        if ($userEmail) {
+            try {
+                // Send the email with the updated status
+                Mail::to($userEmail)->send(new KycVerifyMail($request->status, $userName));
+                Log::info('KYC status email sent successfully', ['email' => $userEmail, 'status' => $request->status]);
+            } catch (\Exception $e) {
+                // Log the error if email sending fails
+                Log::error('Failed to send KYC status email', [
+                    'email' => $userEmail,
+                    'status' => $request->status,
+                    'error' => $e->getMessage(),
+                ]);
             }
         }
-
-        return response()->json(['success' => true, 'message' => 'KYC status updated successfully.']);
     }
+
+    return response()->json(['success' => true, 'message' => 'KYC status updated successfully.']);
+}
 
     /**
      * Show the application dashboard.
