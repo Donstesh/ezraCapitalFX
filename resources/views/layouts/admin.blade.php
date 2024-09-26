@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="../assets/img/favicon.png">
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
-        
+
         <link rel="stylesheet" href="admin/plugins/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="admin/plugins/fontawesome-free/css/all.min.css">
         <link rel="stylesheet" href="admin/plugins/icon-kit/dist/css/iconkit.min.css">
@@ -43,7 +43,7 @@
                             <button type="button" id="navbar-fullscreen" class="nav-link"><i class="ik ik-maximize"></i></button>
                         </div>
                         <div class="top-menu d-flex align-items-center">
-                            
+
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="admin/img/user.jpg" alt=""></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -54,7 +54,7 @@
                                         <i class="ik ik-power dropdown-icon"></i> Logout
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                             @csrf
-                                        </form> 
+                                        </form>
                                     </a>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                             <span class="text">Admin Panel</span>
                         </a>
                     </div>
-                    
+
                     <div class="sidebar-content">
                         <div class="nav-container">
                             <nav id="main-menu-navigation" class="navigation-main">
@@ -84,6 +84,10 @@
                                 <div class="nav-item">
                                     <a href="{{url('user-deposits')}}"><i class="ik ik-dollar-sign"></i><span>User Deposits</span></a>
                                 </div>
+
+                                <div class="nav-item">
+                                    <a href="{{url('user-withdrawals')}}"><i class="ik ik-dollar-sign"></i><span>User Withdrawals</span></a>
+                                </div>
                                 <div class="nav-item has-sub">
                                     <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Plans</span></a>
                                     <div class="submenu-content">
@@ -95,7 +99,7 @@
                                     <a href="{{url('view-users')}}"><i class="ik ik-users"></i><span>Registered Users</span></a>
                                 </div>
                                 <div class="nav-lavel">Setup</div>
-                                
+
                                 <div class="nav-item">
                                     <a href="{{url('view-wallets')}}"><i class="ik ik-command"></i><span>Wallet Address</span></a>
                                 </div>
@@ -110,7 +114,7 @@
                 @yield('content')
             </div>
         </div>
-        
+
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script>window.jQuery || document.write('<script src="admin/src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
         <script src="admin/plugins/popper.js/dist/umd/popper.min.js"></script>

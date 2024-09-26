@@ -104,6 +104,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('delete-product/{id}',[HomeController::class, 'deleteProduct'])->name('admin.product.delete');
     Route::get('/user-deposits', [HomeController::class, 'userDeposit'])->name('admin.user-deposits');
     Route::put('/update-status', [HomeController::class, 'updateStatus'])->name('admin.updateStatus');
+    Route::get('/user-withdrawals', [HomeController::class, 'userWithdrawal'])->name('admin.user-withdrawals');
+    Route::put('/update-with-status', [HomeController::class, 'updateWithdrawalStatus'])->name('admin.updateWithdrawalStatus');
     Route::get('/category-setup', [HomeController::class, 'categorySetup'])->name('admin.category-setup');
     Route::post('/save-m-category', [HomeController::class, 'saveMCategory'])->name('save-m-category.store');
     Route::post('/save-category', [HomeController::class, 'saveCategory'])->name('save-category.store');

@@ -14,6 +14,7 @@ use App\Models\UserPlan;
 use App\Models\Wallet;
 use App\Models\User;
 use App\Models\Deposit;
+use App\Models\Withdrawal;
 use App\Models\EmailTemplate;
 use App\Models\Trade;
 use Carbon\Carbon;
@@ -269,6 +270,11 @@ class HomeController extends Controller
         $deposits = Deposit::get();
         return view('admin.deposits', compact('deposits'));
     }
+    public function userWithdrawal()
+    {
+        $withdrawals = Withdrawal::get();
+        return view('admin.withdrawals', compact('withdrawals'));
+    }
     public function updateStatus(Request $request)
     {
         // Validate the input
@@ -294,6 +300,32 @@ class HomeController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'Deposit status updated successfully.']);
+    }
+    public function updateWithdrawalStatus(Request $request)
+    {
+        // Validate the input
+        $request->validate([
+            'id' => 'required|exists:deposits,id',
+            'status' => 'required|string|in:confirmed,unconfirmed',
+        ]);
+
+        // Find the deposit record
+        $withdrawal = Withdrawal::find($request->id);
+
+        // Update the deposit status
+        $withdrawal->status = $request->status;
+        $withdrawal->save();
+
+        // Check if status is confirmed
+        // if ($request->status == 'confirmed') {
+        //     // Fetch the user's email using the user_id from the deposits table
+        //     $user = $withdrawal->user; // Assuming there is a relationship defined in the Deposit model
+
+        //     // Send a confirmation email
+        //     Mail::to($user->email)->send(new DepositConfirmationMail($deposit));
+        // }
+
+        return response()->json(['success' => true, 'message' => 'Withdrawal status updated successfully.']);
     }
     public function viewWallets()
     {
