@@ -95,7 +95,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('adminHome');
 
     Route::get('/adminHome', [HomeController::class, 'adminHome'])->name('admin.home');
-    Route::get('/new-orders', [HomeController::class, 'newOrders'])->name('admin.new-orders');
+    Route::get('/new-orders', [HomeController::class, 'userPlans'])->name('admin.new-orders');
     Route::put('/update-order', [HomeController::class, 'updateOrder'])->name('admin.updateOrder');
     Route::put('/cancel-order', [HomeController::class, 'cancelOrder'])->name('admin.cancelOrder');
     Route::get('/complete-orders', [HomeController::class, 'completeOrders'])->name('admin.complete-orders');

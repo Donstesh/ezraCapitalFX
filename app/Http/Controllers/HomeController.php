@@ -270,6 +270,11 @@ class HomeController extends Controller
         $deposits = Deposit::get();
         return view('admin.deposits', compact('deposits'));
     }
+    public function userPlans()
+    {
+        $plans = UserPlan::get();
+        return view('admin.plans', compact('plans'));
+    }
     public function userWithdrawal()
     {
         $withdrawals = Withdrawal::get();
