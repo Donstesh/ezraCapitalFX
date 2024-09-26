@@ -14,6 +14,7 @@ use App\Models\UserPlan;
 use App\Models\Wallet;
 use App\Models\User;
 use App\Models\Deposit;
+use App\Models\EmailTemplate;
 use App\Models\Trade;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -40,6 +41,37 @@ class HomeController extends Controller
         return response()->json(['status' => 'Queue processed']);
     }
 
+    // public function getCryptoPrices()
+    // {
+    //     try {
+    //         // Check if prices are cached
+    //         $cryptoData = Cache::remember('crypto_prices', 60, function () {
+    //             // Fetch from API with a longer timeout
+    //             $response = Http::timeout(30)->get('https://api.coingecko.com/api/v3/simple/price', [
+    //                 'ids' => 'bitcoin,ethereum,tether',
+    //                 'vs_currencies' => 'gbp',
+    //             ]);
+
+    //             // Log the response body for debugging
+    //             \Log::info('API Response:', ['response' => $response->body()]);
+
+    //             // Check if response is JSON
+    //             if ($response->ok()) {
+    //                 $json = $response->json(); // Try parsing JSON
+    //                 return $json;
+    //             } else {
+    //                 throw new \Exception('Unable to fetch data from the API');
+    //             }
+    //         });
+
+    //         return response()->json($cryptoData);
+
+    //     } catch (\Exception $e) {
+    //         \Log::error('Error fetching crypto prices:', ['error' => $e->getMessage()]);
+    //         return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+    //     }
+    // }
+
     public function getCryptoPrices()
     {
         try {
@@ -56,18 +88,17 @@ class HomeController extends Controller
 
                 // Check if response is JSON
                 if ($response->ok()) {
-                    $json = $response->json(); // Try parsing JSON
-                    return $json;
+                    return $response->json(); // Return the decoded JSON directly
                 } else {
                     throw new \Exception('Unable to fetch data from the API');
                 }
             });
 
-            return response()->json($cryptoData);
+            return $cryptoData; // Return the cached data directly
 
         } catch (\Exception $e) {
             \Log::error('Error fetching crypto prices:', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+            return null; // Return null in case of error
         }
     }
 
@@ -315,42 +346,117 @@ class HomeController extends Controller
         return view('admin.kyc-verification', compact('userskyc'));
     }
     public function verifyKYC(Request $request)
-{
-    $request->validate([
-        'id' => 'required|exists:kyc_verifies,id',
-        'status' => 'required|string|in:pending,verified,rejected',
-    ]);
+    {
+        $request->validate([
+            'id' => 'required|exists:kyc_verifies,id',
+            'status' => 'required|string|in:pending,verified,rejected',
+        ]);
 
-    $kyc = KycVerify::find($request->id);
-    $previousStatus = $kyc->status;  // Capture the previous status
+        $kyc = KycVerify::find($request->id);
+        $previousStatus = $kyc->status;  // Capture the previous status
 
-    $kyc->status = $request->status;
-    $kyc->save();
+        $kyc->status = $request->status;
+        $kyc->save();
 
-    // Send email only if the status changes to 'verified' or 'rejected'
-    if ($previousStatus !== $request->status && in_array($request->status, ['verified', 'rejected'])) {
-        // Send the email using the email field in KycVerify
-        $userEmail = $kyc->email;
-        $userName = $kyc->f_name;  // Assuming f_name is the user's first name
+        // Send email only if the status changes to 'verified' or 'rejected'
+        if ($previousStatus !== $request->status && in_array($request->status, ['verified', 'rejected'])) {
+            // Send the email using the email field in KycVerify
+            $userEmail = $kyc->email;
+            $userName = $kyc->f_name;  // Assuming f_name is the user's first name
 
-        if ($userEmail) {
-            try {
-                // Send the email with the updated status
-                Mail::to($userEmail)->send(new KycVerifyMail($request->status, $userName));
-                Log::info('KYC status email sent successfully', ['email' => $userEmail, 'status' => $request->status]);
-            } catch (\Exception $e) {
-                // Log the error if email sending fails
-                Log::error('Failed to send KYC status email', [
-                    'email' => $userEmail,
-                    'status' => $request->status,
-                    'error' => $e->getMessage(),
-                ]);
+            if ($userEmail) {
+                try {
+                    // Send the email with the updated status
+                    Mail::to($userEmail)->send(new KycVerifyMail($request->status, $userName));
+                    Log::info('KYC status email sent successfully', ['email' => $userEmail, 'status' => $request->status]);
+                } catch (\Exception $e) {
+                    // Log the error if email sending fails
+                    Log::error('Failed to send KYC status email', [
+                        'email' => $userEmail,
+                        'status' => $request->status,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
             }
         }
+
+        return response()->json(['success' => true, 'message' => 'KYC status updated successfully.']);
+    }
+    public function getUser($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+    public function storeEmail(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'userEmail' => 'required|email',
+            'userFullName' => 'required|string', // Validate that userFullName is required
+            'recipientId' => 'required|exists:users,id',
+        ]);
+
+        // Save email template with mass assignment
+        $emailTemplate = EmailTemplate::create([
+            'subject' => $request->input('title'),
+            'body' => $request->input('description'),
+            'user_id' => $request->input('recipientId'), // Save the recipient's user ID
+            'user_email' => $request->input('userEmail'),
+            'user_full_name' => $request->input('userFullName'), // Make sure to store the full name
+        ]);
+
+        // Send the email
+        Mail::raw($request->input('description'), function ($message) use ($emailTemplate) {
+            $message->to($emailTemplate->user_email)
+                    ->subject($emailTemplate->subject);
+        });
+
+        return response()->json(['message' => 'Email sent successfully!']);
     }
 
-    return response()->json(['success' => true, 'message' => 'KYC status updated successfully.']);
-}
+    public function generateTrxId()
+    {
+        $numbers = strtoupper(substr(str_shuffle('0123456789'), 0, 4));
+        $letters = strtoupper(substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 3));
+        return 'DEP-' . $numbers . '-' . $letters;
+    }
+    public function storeDirectBalance(Request $request)
+    {
+        // Validate request data
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'amount_in_gbp' => 'required|numeric',
+        ]);
+
+        // Fetch the current Bitcoin price in GBP
+        $cryptoPrices = $this->getCryptoPrices(); // Call your method to get crypto prices
+
+        // Check if we successfully fetched the prices
+        if ($cryptoPrices === null || !isset($cryptoPrices['bitcoin']['gbp'])) {
+            return response()->json(['error' => 'Unable to fetch Bitcoin price.'], 500);
+        }
+
+        // Get BTC price from the response
+        $btcPriceInGbp = $cryptoPrices['bitcoin']['gbp'];
+
+        // Calculate the amount in BTC
+        $amountInBtc = $request->amount_in_gbp / $btcPriceInGbp; // Convert GBP to BTC
+
+        // Create a new deposit entry
+        $deposit = new Deposit();
+        $deposit->user_id = $request->user_id;
+        $deposit->deposit_method = 'direct_deposit';
+        $deposit->amount_in_gbp = $request->amount_in_gbp;
+        $deposit->amount = $amountInBtc; // Store the calculated BTC amount
+        $deposit->trx_id = $this->generateTrxId(); // Call the function here
+        $deposit->deposit_status = 'confirmed'; // or whatever logic you need
+
+        // Save the deposit
+        $deposit->save();
+
+        return response()->json(['message' => 'Balance added successfully.']);
+    }
 
     /**
      * Show the application dashboard.

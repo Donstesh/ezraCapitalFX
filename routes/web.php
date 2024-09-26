@@ -117,6 +117,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/site-setup',[HomeController::class, 'viewSetup'])->name('admin.site-setup');
     Route::post('/support-settings', [HomeController::class, 'saveSupportSettings'])->name('admin.support.save');
 
+    Route::get('/admin/user/{id}', [HomeController::class, 'getUser']);
+    Route::post('/admin/email/send', [HomeController::class, 'storeEmail'])->name('admin.email.send');
+    Route::post('/admin/balance/store', [HomeController::class, 'storeDirectBalance'])->name('admin.balance.store');
+
     Route::get('/kyc-verification',[HomeController::class, 'viewUsersKYC'])->name('admin.kyc-verification');
     Route::post('/kyc-verify', [HomeController::class, 'verifyKYC'])->name('admin.kyc-verify');
 });
