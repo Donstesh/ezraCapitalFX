@@ -407,7 +407,15 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const planCard = this.closest('.card');
             const planName = planCard.querySelector('h2').textContent;
-            const planAmount = planCard.querySelector('h4').textContent;
+            const planAmountText = planCard.querySelector('h4').textContent;
+
+            // Log both amounts
+            console.log('Selected Plan:', planName);
+            console.log('Plan Amount (Text):', planAmountText); // Log the original amount with currency
+
+            // Remove the currency sign and commas, then convert to a number
+            const planAmount = parseFloat(planAmountText.replace(/[^0-9.-]+/g, ''));
+            console.log('Plan Amount (Number):', planAmount); // Log the numeric amount for saving
 
             // Find the closest section that contains the <h3> element
             const section = this.closest('section');
@@ -415,13 +423,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             selectedPlan = {
                 name: planName,
-                amount: planAmount,
+                amount: planAmount, // This is now a number
                 option: planOption
             };
 
             // Display selected plan details in the modal
             document.getElementById('modalPlanDetails').textContent = `You have selected the ${planOption} ${planName} plan.`;
-            document.getElementById('modalPlanAmount').textContent = `Amount: ${planAmount}`;
+            document.getElementById('modalPlanAmount').textContent = `Amount: ${planAmountText}`; // Keep original amount for modal display
 
             // Show the modal
             $('#planModal').modal('show');
@@ -430,6 +438,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('confirmPlan').addEventListener('click', function() {
         if (selectedPlan) {
+            console.log('Sending data:', {
+                plan_name: selectedPlan.name,
+                plan_amount: selectedPlan.amount,
+                plan_option: selectedPlan.option
+            });
+
             fetch('/select-plan', {
                 method: 'POST',
                 headers: {
@@ -442,19 +456,34 @@ document.addEventListener('DOMContentLoaded', function() {
                     plan_option: selectedPlan.option
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return Promise.reject(response);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     alert('Plan saved successfully!');
                     $('#planModal').modal('hide');
                 } else {
-                    alert('Error saving plan.');
+                    alert(`Error: ${data.message}`); // Display error message
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                if (error.status) {
+                    error.json().then(errData => {
+                        alert(`Error: ${errData.message}`); // Show server error message
+                    });
+                } else {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred.');
+                }
+            });
         }
     });
 });
+
 </script>
 
 @endsection
