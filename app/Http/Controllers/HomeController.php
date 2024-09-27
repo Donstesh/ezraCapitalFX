@@ -113,21 +113,39 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
+        // Fetch KYC verification details
         $kyc = KycVerify::where('user_id', $user->id)->first();
-        $user_balance = Deposit::where('user_id', $user->id)->where('deposit_status', 'confirmed')->first();
 
+        // Fetch user's confirmed deposit
+        $user_balance = Deposit::where('user_id', $user->id)
+                            ->where('deposit_status', 'confirmed')
+                            ->first();
+
+        // Determine KYC status
         $status = $kyc ? $kyc->status : 'pending';
 
-        $user_trades_open = Trade::where('user_id', $user->id)->where('trade_status', 'open')->get();
-        $user_trades_closed = Trade::where('user_id', $user->id)->where('trade_status', 'closed')->get();
+        // Fetch user's plan details
+        $plan = UserPlan::where('user_id', $user->id)->first(); // Corrected to get the first plan
 
+        // Fetch user's open and closed trades
+        $user_trades_open = Trade::where('user_id', $user->id)
+                                ->where('trade_status', 'open')
+                                ->get();
+
+        $user_trades_closed = Trade::where('user_id', $user->id)
+                                ->where('trade_status', 'closed')
+                                ->get();
+
+        // Return the view with the retrieved data
         return view('user.home', [
             'status' => $status,
             'user_balance' => $user_balance,
             'user_trades_open' => $user_trades_open,
             'user_trades_closed' => $user_trades_closed,
+            'plan' => $plan, // plan is now the first UserPlan object
         ]);
     }
+
 
     /**
      * Show the application dashboard.

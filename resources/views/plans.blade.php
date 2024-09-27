@@ -466,14 +466,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     alert('Plan saved successfully!');
                     $('#planModal').modal('hide');
+
+                    // Redirect to the home page after clicking OK on the alert
+                    window.location.href = '/home'; // Change this to your desired redirect URL
                 } else {
-                    alert(`Error: ${data.message}`); // Display error message
+                    alert(`${data.message}`);
                 }
             })
             .catch(error => {
                 if (error.status) {
                     error.json().then(errData => {
-                        alert(`Error: ${errData.message}`); // Show server error message
+                        alert(`${errData.message}`);
                     });
                 } else {
                     console.error('Error:', error);
@@ -482,6 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+
 });
 
 </script>
