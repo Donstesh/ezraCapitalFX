@@ -98,7 +98,7 @@
                       <i class="bi bi-bag-fill"></i>
                     </div>
                     <div class="ps-3">
-                        <h6>{{$plan->plan_selected}}</h6>
+                        <h6>{{$plan->plan_selected ?? 'No Plan'}}</h6>
 
                     </div>
                   </div>
