@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendOtpMail;
 use App\Mail\WelcomeEmail;
@@ -493,6 +494,33 @@ class HomeController extends Controller
         $deposit->save();
 
         return response()->json(['message' => 'Balance added successfully.']);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        // Validate the input fields
+        $request->validate([
+            'password' => 'required',            // Current password
+            'newpassword' => 'required|min:8',   // New password with minimum length
+            'renewpassword' => 'required|same:newpassword'  // Must match new password
+        ]);
+
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        // Check if the current password matches the user's password
+        if (!Hash::check($request->input('password'), $user->password)) {
+            return back()->withErrors(['password' => 'The current password is incorrect.']);
+        }
+
+        // Update the user's password with the new one
+        $user->password = Hash::make($request->input('newpassword'));
+        $user->save();
+
+        // Optionally, log the user out to reauthenticate with the new password
+        Auth::logout();
+
+        return redirect()->route('login')->with('success', 'Password updated successfully. Please login with your new password.');
     }
 
     /**
