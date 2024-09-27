@@ -39,6 +39,8 @@ Route::get('/otp-verify', [HomeController::class, 'showOtpForm'])->name('otp.ver
 Route::post('/otp-verify', [HomeController::class, 'verifyOtp'])->name('otp.verify.submit');
 Route::post('/request-otp', [HomeController::class, 'requestOtp'])->name('request.otp');
 
+Route::post('/reset-password', [HomeController::class, 'resetPassword'])->name('reset-password');
+
 Route::get('/test-email', function () {
     try {
         Mail::raw('This is a test email', function ($message) {
@@ -135,5 +137,7 @@ All Admin Routes List
 Route::middleware(['auth', 'user-access:user', 'otp'])->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
 
 });
