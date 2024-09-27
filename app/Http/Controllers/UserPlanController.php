@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PlanPurchaseMail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
 
 
 class UserPlanController extends Controller
@@ -95,6 +96,9 @@ class UserPlanController extends Controller
 
         // Send a confirmation email to the user
         Mail::to($userEmail)->send(new PlanPurchaseMail($userPlan));
+
+        // Call the GenerateProfit command
+        Artisan::call('profit:generate', ['user_id' => $userId]);
 
         return response()->json(['success' => true, 'message' => 'Plan purchased successfully.']);
     }
