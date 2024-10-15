@@ -40,8 +40,7 @@ Route::post('/otp-verify', [HomeController::class, 'verifyOtp'])->name('otp.veri
 Route::post('/request-otp', [HomeController::class, 'requestOtp'])->name('request.otp');
 
 Route::post('/reset-password', [HomeController::class, 'resetPassword'])->name('reset-password');
-Route::get('/start-trading/{userId}', [TradeController::class, 'startTrading']);
-
+Route::post('/start-trade/{userId}', [HomeController::class, 'startTrade']);
 
 Route::get('/test-email', function () {
     try {
