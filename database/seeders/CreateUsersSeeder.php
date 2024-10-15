@@ -24,9 +24,9 @@ class CreateUsersSeeder extends Seeder
                'country'=>'Kenya',
                'city'=>'NBO',
                'phone'=>'712345678',
-               'email'=>'admin@ezra.com',
+               'email'=>'admin@ezrafxlive.com',
                'type'=>1,
-               'password'=> bcrypt('123456'),
+               'password'=> bcrypt('Admin@128**'),
             ],
             [
                'f_name'=>'Manager User',
