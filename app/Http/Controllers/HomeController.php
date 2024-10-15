@@ -12,6 +12,7 @@ use App\Mail\WelcomeEmail;
 use App\Mail\KycVerifyMail;
 use App\Models\KycVerify;
 use App\Models\UserPlan;
+use App\Models\Profit;
 use App\Models\Wallet;
 use App\Models\User;
 use App\Models\Deposit;
@@ -25,6 +26,7 @@ use App\Mail\DepositConfirmationMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use Log;
+use App\Jobs\GenerateProfitJob;
 
 class HomeController extends Controller
 {
@@ -125,7 +127,9 @@ class HomeController extends Controller
         $status = $kyc ? $kyc->status : 'pending';
 
         // Fetch user's plan details
-        $plan = UserPlan::where('user_id', $user->id)->first(); // Corrected to get the first plan
+        $plan = UserPlan::where('user_id', $user->id)->first();
+        $user_profits = Profit::where('user_id', $user->id)->get();
+        $user_profit = Profit::where('user_id', $user->id)->sum('profit_loss');
 
         // Fetch user's open and closed trades
         $user_trades_open = Trade::where('user_id', $user->id)
@@ -142,7 +146,9 @@ class HomeController extends Controller
             'user_balance' => $user_balance,
             'user_trades_open' => $user_trades_open,
             'user_trades_closed' => $user_trades_closed,
-            'plan' => $plan, // plan is now the first UserPlan object
+            'plan' => $plan,
+            'user_profits' => $user_profits,
+            'user_profit' => $user_profit,
         ]);
     }
 
@@ -277,16 +283,43 @@ class HomeController extends Controller
      */
     public function adminHome()
     {
-        $users = User::where('type', 0)->get();
+        // Fetch users along with the total amount_in_gbp from confirmed deposits
+        $users = User::where('type', 0)
+            ->select('users.*', DB::raw('SUM(deposits.amount_in_gbp) as total_amount_in_gbp'))
+            ->leftJoin('deposits', function($join) {
+                $join->on('users.id', '=', 'deposits.user_id')
+                    ->where('deposits.deposit_status', '=', 'confirmed');
+            })
+            ->groupBy('users.id')
+            ->get();
+
+        // Calculate the total revenue from confirmed deposits
         $revenue = Deposit::where('deposit_status', 'confirmed')->sum('amount');
+
+        // Count active user plans and users of type 0
         $countPlans = UserPlan::where('status', 'Active')->count();
         $countUsers = User::where('type', 0)->count();
+
+        // Get all user plans
         $viewOrders = UserPlan::all();
+
         return view('admin.home', compact('users', 'viewOrders', 'countUsers', 'countPlans', 'revenue'));
     }
+    public function startTrade($userId)
+    {
+        // Dispatch the job to generate profits
+        GenerateProfitJob::dispatch($userId)->delay(now()->addMinute());
+
+        // Redirect back with success message
+        return redirect()->back()->with('success', 'Trade started for User ID ' . $userId);
+    }
+
     public function userDeposit()
     {
-        $deposits = Deposit::get();
+        $deposits = Deposit::select('deposits.*', 'users.f_name', 'users.l_name')
+            ->join('users', 'deposits.user_id', '=', 'users.id')
+            ->get();
+
         return view('admin.deposits', compact('deposits'));
     }
     public function userPlans()

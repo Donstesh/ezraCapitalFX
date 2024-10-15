@@ -97,9 +97,6 @@ class UserPlanController extends Controller
         // Send a confirmation email to the user
         Mail::to($userEmail)->send(new PlanPurchaseMail($userPlan));
 
-        // Call the GenerateProfit command
-        Artisan::call('profit:generate', ['user_id' => $userId]);
-
         return response()->json(['success' => true, 'message' => 'Plan purchased successfully.']);
     }
     public function destroy(UserPlan $userPlan)
