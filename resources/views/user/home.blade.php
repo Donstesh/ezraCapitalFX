@@ -120,7 +120,7 @@
                       <i class="bi bi-calendar-date"></i>
                     </div>
                     <div class="ps-3">
-                        <h6>£0.00</h6>
+                        <h6>£{{$user_profit}}</h6>
 
                     </div>
                   </div>
@@ -161,16 +161,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Trades</h5>
+                        <h5 class="card-title">Profits Table</h5>
 
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="myTab" role="tablist">
                             <li class="nav-item flex-fill" role="presentation">
-                                <button class="nav-link  w-100 active" id="table1-tab" data-bs-toggle="tab" data-bs-target="#table1" type="button" role="tab" aria-controls="table1" aria-selected="true" >Open Trades</button>
+                                <button class="nav-link  w-100 active" id="table1-tab" data-bs-toggle="tab" data-bs-target="#table1" type="button" role="tab" aria-controls="table1" aria-selected="true" >Profits/Loss Table</button>
                             </li>
-                            <li class="nav-item flex-fill" role="presentation">
+                            <!-- <li class="nav-item flex-fill" role="presentation">
                                 <button class="nav-link w-100" id="table2-tab" data-bs-toggle="tab" data-bs-target="#table2" type="button" role="tab" aria-controls="table2" aria-selected="false">Closed Trades</button>
-                            </li>
+                            </li> -->
                         </ul>
 
                         <!-- Tab content -->
@@ -180,21 +180,17 @@
                                 <table class="table datatable">
                                     <thead>
                                         <tr>
-                                            <th><b>Symbol</b></th>
-                                            <th>Amount</th>
+                                            <th data-type="date" data-format="YYYY/DD/MM"><b>Date</b></th>
                                             <th>Profit</th>
-                                            <th data-type="date" data-format="YYYY/DD/MM">Date</th>
-                                            <th>Status</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($user_trades_open as $trade)
+                                        @foreach($user_profits as $profits)
                                         <tr>
-                                            <td>{{ $trade->symbol }}</td>
-                                            <td>${{ $trade->amount }}</td>
-                                            <td>${{ $trade->profit }}</td>
-                                            <td>{{ $trade->date }}</td>
-                                            <td>{{ $trade->trade_status }}</td>
+                                            <td>${{ $trade->created_at }}</td>
+                                            <td>${{ $trade->profit_loss }}</td>
+
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -202,7 +198,7 @@
                             </div>
 
                             <!-- Table 2 -->
-                            <div class="tab-pane fade" id="table2" role="tabpanel" aria-labelledby="table2-tab">
+                            <div class="tab-pane fade" id="table" role="tabpanel" aria-labelledby="table2-tab">
                                 <table class="table datatable">
                                     <thead>
                                         <tr>
