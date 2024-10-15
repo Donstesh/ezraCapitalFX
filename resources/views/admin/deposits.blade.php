@@ -3,7 +3,7 @@
 @section('content')
 <div class="main-content">
     <div class="container-fluid">
-        
+
         <div class="card">
             <div class="card-header d-block">
                 <h3>User Deposits</h3>
@@ -19,12 +19,13 @@
                             <th>Deposit Status</th>
                             <th>Deposit Date</th>
                             <th>Action</th>
+                            <th>Trade</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach($deposits as $deposit)
                             <tr>
-                                <td>{{ $deposit->user_id }}</td>
+                                <td>{{ $deposit->f_name }} {{ $deposit->l_name }}</td>
                                 <td>{{ $deposit->deposit_method }}</td>
                                 <td>{{ $deposit->amount }}</td>
                                 <td>
@@ -44,6 +45,13 @@
                                         <input type="hidden" name="deposit_status" value="confirmed">
                                     </form>
                                 </td>
+                                <td>
+                                    <!-- Start Trade Button -->
+                                    <form action="{{ url('/start-trade/' . $deposit->user_id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">Start Trade</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -55,6 +63,7 @@
                             <th>Deposit Status</th>
                             <th>Deposit Date</th>
                             <th>Action</th>
+                            <th>Trade</th>
                         </tr>
                         </tfoot>
                     </table>

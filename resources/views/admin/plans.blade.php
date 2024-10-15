@@ -18,7 +18,7 @@
                             <th>Plan Amount</th>
                             <th>Plan Option</th>
                             <th>Plan Status</th>
-                            <th>Action</th>
+                            <th>Trade</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -29,6 +29,13 @@
                                 <td>{{ $plan->plan_amount }}</td>
                                 <td>{{ $plan->plan_option }}</td>
                                 <td>{{ $plan->status }}</td>
+                                <td>
+                                    <!-- Start Trade Button -->
+                                    <form action="{{ url('/start-trade/' . $plan->user_id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">Start Trade</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -39,7 +46,7 @@
                             <th>Plan Amount</th>
                             <th>Plan Option</th>
                             <th>Plan Status</th>
-                            <th>Action</th>
+                            <th>Trade</th>
                         </tr>
                         </tfoot>
                     </table>

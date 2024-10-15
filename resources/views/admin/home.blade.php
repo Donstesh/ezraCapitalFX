@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-  
+
 @section('content')
 <div class="main-content">
     <div class="container-fluid">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
 
         <div class="card">
             <div class="card-header d-block">
@@ -91,6 +91,7 @@
                             <th>User Name</th>
                             <th>User Email</th>
                             <th>User Phone</th>
+                            <th>User Balance</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -100,10 +101,11 @@
                                 <td>{{ $user->f_name }} {{ $user->l_name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone }}</td>
+                                <td>{{ $user->total_amount_in_gbp ?? 0 }}</td>
                                 <td>
                                     <a href="{{route('admin.user.delete',['id'=>$user->id])}}" class = "btn btn-danger">
                                         <i class="ik ik-trash-2"></i>
-                                    </a> 
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach
@@ -113,6 +115,7 @@
                             <th>User Name</th>
                             <th>User Email</th>
                             <th>User Phone</th>
+                            <th>User Balance</th>
                             <th>Action</th>
                         </tr>
                         </tfoot>
@@ -120,7 +123,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -128,7 +131,7 @@
     $(document).ready(function () {
         $('.process-order').on('click', function () {
             var orderId = $(this).data('id');
-            
+
             $('#order-id').val(orderId);
 
             $.ajax({
